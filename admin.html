@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Nadir Photographe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#d4a843;--bg:#1a1a1a;--bg2:#222;--card:#2a2a2a;--text:#f0f0f0;--text2:#999;--border:#333;--danger:#ef4444;--success:#22c55e}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* LOGIN */
+#loginScreen{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
+.login-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;width:100%;max-width:400px;text-align:center}
+.login-box h1{font-size:1.5rem;margin-bottom:6px;color:var(--gold)}
+.login-box p{color:var(--text2);font-size:.85rem;margin-bottom:24px}
+.login-box input{width:100%;padding:13px 14px;background:var(--bg);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.95rem;margin-bottom:14px;font-family:'Inter',sans-serif}
+.login-box input:focus{outline:none;border-color:var(--gold)}
+.login-box .error{color:var(--danger);font-size:.8rem;margin-bottom:10px;display:none}
+.btn-gold{width:100%;padding:13px;background:var(--gold);color:#1a1a1a;border:none;border-radius:10px;font-weight:600;font-size:.9rem;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-gold:hover{opacity:.9}
+.btn-out{width:100%;padding:10px 20px;background:transparent;color:var(--gold);border:1px solid var(--gold);border-radius:8px;font-weight:600;font-size:.85rem;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-out:hover{background:var(--gold);color:#1a1a1a}
+.btn-sm{padding:8px 16px;font-size:.8rem;border-radius:6px;width:auto}
+
+/* DASHBOARD */
+#dashboard{display:none}
+.dash-header{background:var(--card);border-bottom:1px solid var(--border);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.dash-header h2{font-size:1.1rem;color:var(--gold)}
+.dash-header .right{display:flex;gap:8px;align-items:center}
+.dash-body{display:flex;min-height:calc(100vh - 54px)}
+.dash-side{width:200px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);padding:8px}
+.dash-side button{display:flex;align-items:center;gap:8px;width:100%;padding:10px 12px;background:none;border:none;color:var(--text2);font-size:.82rem;cursor:pointer;border-radius:8px;font-family:'Inter',sans-serif;text-align:left;transition:all .15s}
+.dash-side button:hover{color:var(--text);background:var(--card)}
+.dash-side button.active{color:var(--gold);background:var(--card)}
+.dash-side button i{width:18px}
+.dash-main{flex:1;padding:20px 24px;overflow-y:auto}
+.dash-main h3{font-size:1.2rem;margin-bottom:20px;color:var(--gold);border-bottom:1px solid var(--border);padding-bottom:10px}
+
+/* FORMS */
+.dash-section{display:none}
+.dash-section.active{display:block}
+.form-group{margin-bottom:16px}
+.form-group label{display:block;font-size:.82rem;color:var(--text2);margin-bottom:5px;font-weight:500}
+.form-group input,.form-group textarea{width:100%;padding:11px 13px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.88rem;font-family:'Inter',sans-serif;transition:border .2s}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:70px}
+.form-group textarea.code{font-family:monospace;font-size:.8rem;min-height:120px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-actions{display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.toast{position:fixed;top:20px;right:20px;padding:12px 20px;border-radius:8px;color:#fff;font-size:.85rem;font-weight:500;z-index:9999;transform:translateY(-120%);transition:transform .35s ease}
+.toast.show{transform:translateY(0)}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.info-box{background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.2);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:.8rem;color:var(--text2);line-height:1.6}
+@media(max-width:640px){
+    .dash-body{flex-direction:column}
+    .dash-side{width:100%;display:flex;flex-wrap:wrap;gap:4px;padding:8px;border-right:none;border-bottom:1px solid var(--border)}
+    .dash-side button{width:auto;font-size:.75rem;padding:8px 10px}
+    .dash-main{padding:16px}
+    .form-row{grid-template-columns:1fr}
+    .dash-header{padding:10px 14px}
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+    <div class="login-box">
+        <h1><i class="fas fa-crown"></i> Admin</h1>
+        <p>Nadir Photographe — Panneau d'administration</p>
+        <input type="password" id="loginPass" placeholder="Mot de passe" autocomplete="off">
+        <p class="error" id="loginError">Mot de passe incorrect</p>
+        <button class="btn-gold" id="loginBtn">Connexion</button>
+    </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+    <div class="dash-header">
+        <h2><i class="fas fa-crown"></i> Nadir Photographe — Admin</h2>
+        <div class="right">
+            <button class="btn-out btn-sm" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Déconnexion</button>
+        </div>
+    </div>
+    <div class="dash-body">
+        <div class="dash-side">
+            <button class="active" data-section="hero"><i class="fas fa-home"></i> Hero</button>
+            <button data-section="about"><i class="fas fa-user"></i> À propos</button>
+            <button data-section="portfolio"><i class="fas fa-images"></i> Portfolio</button>
+            <button data-section="services"><i class="fas fa-camera"></i> Services</button>
+            <button data-section="testimonials"><i class="fas fa-star"></i> Testimonials</button>
+            <button data-section="contact"><i class="fas fa-envelope"></i> Contact</button>
+            <button data-section="coord"><i class="fas fa-map-marker-alt"></i> Coordonnées</button>
+            <button data-section="password"><i class="fas fa-key"></i> Password</button>
+        </div>
+        <div class="dash-main" id="dashMain"></div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+let data = null;
+let adminPassword = '';
+
+async function fetchContent() {
+    try {
+        const r = await fetch('/api/content');
+        if (r.ok) { data = await r.json(); return true; }
+    } catch(e) {}
+    return false;
+}
+
+async function saveContentToServer() {
+    try {
+        const r = await fetch('/api/content', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'X-Admin-Password': adminPassword },
+            body: JSON.stringify({ data })
+        });
+        if (r.ok) { showToast('Données sauvegardées ✓','success'); return true; }
+        if (r.status === 401) { showToast('Session expirée, reconnectez-vous','error'); return false; }
+    } catch(e) {}
+    showToast('Erreur de sauvegarde','error');
+    return false;
+}
+
+// ---------- TOAST ----------
+const toast = document.getElementById('toast');
+function showToast(msg, type){
+    toast.textContent = msg;
+    toast.className = 'toast ' + type + ' show';
+    setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ---------- LOGIN ----------
+const loginScreen = document.getElementById('loginScreen');
+const dashboard = document.getElementById('dashboard');
+const loginBtn = document.getElementById('loginBtn');
+const loginPass = document.getElementById('loginPass');
+const loginError = document.getElementById('loginError');
+
+loginBtn.addEventListener('click', doLogin);
+loginPass.addEventListener('keydown', e => { if(e.key === 'Enter') doLogin(); });
+
+async function doLogin() {
+    try {
+        const r = await fetch('/api/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ password: loginPass.value })
+        });
+        const res = await r.json();
+        if (res.ok) {
+            adminPassword = loginPass.value;
+            await fetchContent();
+            loginScreen.style.display = 'none';
+            dashboard.style.display = 'block';
+            renderSection('hero');
+        } else {
+            loginError.style.display = 'block';
+            loginPass.value = '';
+            loginPass.focus();
+        }
+    } catch(e) {
+        loginError.textContent = 'Serveur inaccessible';
+        loginError.style.display = 'block';
+    }
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+    dashboard.style.display = 'none';
+    loginScreen.style.display = 'flex';
+    loginPass.value = '';
+    loginError.style.display = 'none';
+});
+
+// ---------- SIDEBAR ----------
+document.querySelector('.dash-side').addEventListener('click', function(e){
+    const btn = e.target.closest('button');
+    if(!btn) return;
+    const section = btn.dataset.section;
+    if(!section) return;
+    document.querySelectorAll('.dash-side button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderSection(section);
+});
+
+// ---------- RENDER SECTION ----------
+function renderSection(section){
+    const fns = {
+        hero: renderHero,
+        about: renderAbout,
+        portfolio: renderPortfolio,
+        services: renderServices,
+        testimonials: renderTestimonials,
+        contact: renderContact,
+        coord: renderCoord,
+        password: renderPassword,
+    };
+    if(fns[section]) fns[section]();
+    else document.getElementById('dashMain').innerHTML = '<p>Section inconnue</p>';
+}
+
+function field(id, label, value, opts = {}){
+    const tag = opts.textarea ? 'textarea' : 'input';
+    const extra = opts.textarea ? '' : `type="${opts.type||'text'}"`;
+    const rows = opts.textarea ? `rows="${opts.rows||3}"` : '';
+    const cls = opts.code ? 'code' : '';
+    return `<div class="form-group"><label for="${id}">${label}</label><${tag} id="${id}" class="${cls}" ${extra} ${rows}>${opts.textarea ? value||'' : ''}</${tag}></div>`;
+}
+
+function input(id, label, value, opts = {}){
+    const v = value != null ? String(value) : '';
+    if(opts.textarea) return field(id, label, v, {textarea:true, rows:opts.rows, code:opts.code});
+    return `<div class="form-group"><label for="${id}">${label}</label><input id="${id}" type="${opts.type||'text'}" value="${v.replace(/"/g,'&quot;')}"></div>`;
+}
+
+function val(id){ return document.getElementById(id)?.value || ''; }
+function valHtml(id){ return document.getElementById(id)?.value || ''; }
+
+// --- HERO ---
+function renderHero(){
+    const d = data.hero;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>🖼 Hero</h3>
+        <div class="info-box">Ces textes s'affichent sur la bannière d'accueil.</div>
+        ${input('heroTag','Tag',d.tag)}
+        ${input('heroTitle','Titre (HTML accepté)',d.titleHtml)}
+        ${input('heroDesc','Description',d.desc,{textarea:true,rows:3})}
+        ${input('heroBg','Image de fond (chemin)',d.bg)}
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.hero()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE = window.SAVE || {};
+window.SAVE.hero = function(){
+    data.hero = {tag:val('heroTag'),titleHtml:val('heroTitle'),desc:val('heroDesc'),bg:val('heroBg')};
+    saveContentToServer();
+};
+
+// --- ABOUT ---
+function renderAbout(){
+    const d = data.about;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>👤 À propos</h3>
+        <div class="info-box">Modifiez le texte et l'image de la section "Qui suis-je ?".</div>
+        ${input('aboutTag','Tag',d.tag)}
+        ${input('aboutTitle','Titre',d.title)}
+        ${input('aboutSub','Sous-titre (HTML)',d.subtitleHtml)}
+        ${input('aboutDesc1','Description 1',d.desc1,{textarea:true,rows:3})}
+        ${input('aboutDesc2','Description 2',d.desc2,{textarea:true,rows:3})}
+        ${input('aboutImg','Image (chemin)',d.img)}
+        ${input('aboutBtn','Texte du bouton',d.btn)}
+        <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Statistiques</p>
+            <div class="form-row">
+                ${input('stat1Val','Valeur 1',d.statVals.seances)}
+                ${input('stat1Lbl','Libellé 1',d.statLabels.seances)}
+            </div>
+            <div class="form-row">
+                ${input('stat2Val','Valeur 2',d.statVals.clients)}
+                ${input('stat2Lbl','Libellé 2',d.statLabels.clients)}
+            </div>
+            <div class="form-row">
+                ${input('stat3Val','Valeur 3',d.statVals.annees)}
+                ${input('stat3Lbl','Libellé 3',d.statLabels.annees)}
+            </div>
+        </div>
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.about()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.about = function(){
+    data.about = {
+        tag:val('aboutTag'),title:val('aboutTitle'),subtitleHtml:val('aboutSub'),
+        desc1:val('aboutDesc1'),desc2:val('aboutDesc2'),img:val('aboutImg'),btn:val('aboutBtn'),
+        statVals:{seances:parseInt(val('stat1Val'))||0,clients:parseInt(val('stat2Val'))||0,annees:parseInt(val('stat3Val'))||0},
+        statLabels:{seances:val('stat1Lbl'),clients:val('stat2Lbl'),annees:val('stat3Lbl')}
+    };
+    saveContentToServer();
+};
+
+// ---------- GALLERY DRAG & UPLOAD ----------
+window.dragStart = function(e){
+    const el = e.target.closest('[data-idx]');
+    if(!el) return;
+    e.dataTransfer.setData('cat', el.dataset.cat);
+    e.dataTransfer.setData('idx', el.dataset.idx);
+    e.dataTransfer.effectAllowed = 'move';
+};
+window.dragOver = function(e){e.preventDefault();e.dataTransfer.dropEffect='move'};
+window.dropImg = function(e){
+    e.preventDefault();
+    const target = e.target.closest('[data-idx]');
+    if(!target) return;
+    const dragCat = e.dataTransfer.getData('cat');
+    const dragIdx = parseInt(e.dataTransfer.getData('idx'));
+    const dropCat = target.dataset.cat;
+    const dropIdx = parseInt(target.dataset.idx);
+    if(dragCat !== dropCat) return;
+    const arr = data.gallery[dragCat];
+    const [moved] = arr.splice(dragIdx, 1);
+    arr.splice(dropIdx, 0, moved);
+    renderPortfolio();
+};
+window.removeGalImg = async function(cat, idx){
+    const filename = data.gallery[cat][idx];
+    data.gallery[cat].splice(idx, 1);
+    try {
+        await fetch('/api/upload/' + cat + '/' + encodeURIComponent(filename),
+            { method: 'DELETE', headers: { 'X-Admin-Password': adminPassword } });
+    } catch(e) {}
+    renderPortfolio();
+};
+window.addGalImgs = async function(ev, cat){
+    const files = ev.target.files;
+    if(!files.length) return;
+    const formData = new FormData();
+    Array.from(files).forEach(f => formData.append('files', f));
+    try {
+        const res = await fetch('/api/upload/' + cat, {
+            method: 'POST',
+            headers: { 'X-Admin-Password': adminPassword },
+            body: formData
+        });
+        const uploadRes = await res.json();
+        if (uploadRes.ok) {
+            const resp = await fetch('/api/files/' + cat);
+            data.gallery[cat] = await resp.json();
+            renderPortfolio();
+            showToast(uploadRes.files.length + ' image(s) ajoutée(s) ✓', 'success');
+        }
+    } catch(e) {
+        showToast('Erreur upload: serveur inaccessible', 'error');
+    }
+    ev.target.value = '';
+};
+
+// --- PORTFOLIO ---
+function renderPortfolio(){
+    const d = data.portfolio;
+    const g = data.gallery;
+    function catHtml(cat, label, icon, files){
+        const imgs = (files||[]).map((f,i) =>
+            '<div draggable="true" data-cat="'+cat+'" data-idx="'+i+'" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropImg(event)" style="position:relative;display:inline-block;cursor:grab;margin:2px">'+
+            '<img src="'+cat+'/'+f+'" style="width:80px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">'+
+            '<button onclick="event.stopPropagation();removeGalImg(\''+cat+'\','+i+')" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;border:none;font-size:12px;cursor:pointer;line-height:1;padding:0">✕</button>'+
+            '</div>'
+        ).join('');
+        return '<div style="margin-bottom:14px;padding:10px;background:var(--card);border-radius:8px;border:1px solid var(--border)">'+
+            '<p style="font-size:.85rem;color:var(--gold);font-weight:600;margin-bottom:8px">'+icon+' '+label+' ('+(files||[]).length+')</p>'+
+            '<div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;min-height:50px;padding:4px;background:var(--bg);border-radius:6px;border:1px dashed var(--border)" id="grid-'+cat+'">'+(imgs||'<span style="color:var(--text2);font-size:.8rem;padding:10px">Aucune image — glissez-déposez pour réordonner</span>')+'</div>'+
+            '<div style="display:flex;gap:6px">'+
+            '<label class="btn-out btn-sm" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;width:auto;padding:6px 12px;font-size:.8rem;border:1px solid var(--gold);border-radius:6px;color:var(--gold)">'+
+            '<i class="fas fa-plus"></i> Ajouter'+
+            '<input type="file" accept="image/*" multiple style="display:none" onchange="addGalImgs(event,\''+cat+'\')">'+
+            '</label>'+
+            '<span style="font-size:.7rem;color:var(--success);align-self:center">✓ Auto-sauvegardé sur le serveur</span>'+
+            '</div></div>';
+    }
+    document.getElementById('dashMain').innerHTML = `
+        <h3>🖼 Portfolio — Textes & Images</h3>
+        <div class="info-box">Faites glisser pour réordonner. Ajoutez des images → sauvegardées directement sur le serveur.</div>
+        ${input('portTag','Tag',d.tag)}
+        ${input('portTitle','Titre',d.title)}
+        <div style="margin-top:8px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Libellés des filtres</p>
+            <div class="form-row">
+                ${input('fTous','Tous',d.filters.tous)}
+                ${input('fAnimaux','Animaux',d.filters.animaux)}
+            </div>
+            <div class="form-row">
+                ${input('fPersonnes','Personnes',d.filters.personnes)}
+                ${input('fNature','Nature',d.filters.nature)}
+            </div>
+        </div>
+        ${catHtml('animaux','Animaux','🐾',g.animaux)}
+        ${catHtml('nature','Nature','🌿',g.nature)}
+        ${catHtml('personnes','Personnes','👤',g.personnes)}
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.portfolio()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.portfolio = function(){
+    data.portfolio = {
+        tag:val('portTag'),title:val('portTitle'),
+        filters:{tous:val('fTous'),animaux:val('fAnimaux'),personnes:val('fPersonnes'),nature:val('fNature')}
+    };
+    saveContentToServer();
+    renderPortfolio();
+};
+
+// --- SERVICES ---
+function renderServices(){
+    const d = data.services;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>💼 Services</h3>
+        <div class="info-box">Modifiez les 3 cartes de services.</div>
+        ${input('svcTag','Tag',d.tag)}
+        ${input('svcTitle','Titre',d.title)}
+        <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Carte 1 — Mariage</p>
+            ${input('svc1T','Titre',d.cards[0].title)}
+            ${input('svc1D','Description',d.cards[0].desc,{textarea:true,rows:3})}
+        </div>
+        <div style="padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);margin-top:8px">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Carte 2 — Portrait</p>
+            ${input('svc2T','Titre',d.cards[1].title)}
+            ${input('svc2D','Description',d.cards[1].desc,{textarea:true,rows:3})}
+        </div>
+        <div style="padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);margin-top:8px">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Carte 3 — Événements</p>
+            ${input('svc3T','Titre',d.cards[2].title)}
+            ${input('svc3D','Description',d.cards[2].desc,{textarea:true,rows:3})}
+        </div>
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.services()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.services = function(){
+    data.services = {
+        tag:val('svcTag'),title:val('svcTitle'),
+        cards:[
+            {title:val('svc1T'),desc:val('svc1D')},
+            {title:val('svc2T'),desc:val('svc2D')},
+            {title:val('svc3T'),desc:val('svc3D')},
+        ]
+    };
+    saveContentToServer();
+};
+
+// --- TESTIMONIALS ---
+function renderTestimonials(){
+    const d = data.testimonials;
+    const rev = d.reviews;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>⭐ Témoignages</h3>
+        <div class="info-box">Modifiez les 3 avis clients.</div>
+        ${input('tsTag','Tag',d.tag)}
+        ${input('tsTitle','Titre',d.title)}
+        <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Avis 1</p>
+            ${input('ts1T','Texte',rev[0].text,{textarea:true,rows:3})}
+            <div class="form-row">
+                ${input('ts1N','Nom',rev[0].name)}
+                ${input('ts1L','Libellé',rev[0].label)}
+            </div>
+            ${input('ts1I','Image (chemin)',rev[0].img)}
+        </div>
+        <div style="padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);margin-top:8px">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Avis 2</p>
+            ${input('ts2T','Texte',rev[1].text,{textarea:true,rows:3})}
+            <div class="form-row">
+                ${input('ts2N','Nom',rev[1].name)}
+                ${input('ts2L','Libellé',rev[1].label)}
+            </div>
+            ${input('ts2I','Image (chemin)',rev[1].img)}
+        </div>
+        <div style="padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border);margin-top:8px">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Avis 3</p>
+            ${input('ts3T','Texte',rev[2].text,{textarea:true,rows:3})}
+            <div class="form-row">
+                ${input('ts3N','Nom',rev[2].name)}
+                ${input('ts3L','Libellé',rev[2].label)}
+            </div>
+            ${input('ts3I','Image (chemin)',rev[2].img)}
+        </div>
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.testimonials()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.testimonials = function(){
+    data.testimonials = {
+        tag:val('tsTag'),title:val('tsTitle'),
+        reviews:[
+            {text:val('ts1T'),name:val('ts1N'),label:val('ts1L'),img:val('ts1I')},
+            {text:val('ts2T'),name:val('ts2N'),label:val('ts2L'),img:val('ts2I')},
+            {text:val('ts3T'),name:val('ts3N'),label:val('ts3L'),img:val('ts3I')},
+        ]
+    };
+    saveContentToServer();
+};
+
+// --- CONTACT ---
+function renderContact(){
+    const d = data.contact;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>📞 Contact</h3>
+        <div class="info-box">Modifiez les textes du formulaire de contact.</div>
+        ${input('cTag','Tag',d.tag)}
+        ${input('cTitle','Titre',d.title)}
+        ${input('cFormT','Titre du formulaire',d.formTitle)}
+        <div class="form-row">
+            ${input('cNamePh','Placeholder — Nom',d.namePh)}
+            ${input('cEmailPh','Placeholder — Email',d.emailPh)}
+        </div>
+        <div class="form-row">
+            ${input('cPhonePh','Placeholder — Téléphone',d.phonePh)}
+            ${input('cMsgPh','Placeholder — Message',d.msgPh)}
+        </div>
+        ${input('cSubmit','Texte du bouton',d.submit)}
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.contact()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.contact = function(){
+    data.contact = {
+        tag:val('cTag'),title:val('cTitle'),formTitle:val('cFormT'),
+        namePh:val('cNamePh'),emailPh:val('cEmailPh'),phonePh:val('cPhonePh'),msgPh:val('cMsgPh'),submit:val('cSubmit')
+    };
+    saveContentToServer();
+};
+
+// --- COORD ---
+function renderCoord(){
+    const d = data.coord;
+    document.getElementById('dashMain').innerHTML = `
+        <h3>🔧 Coordonnées</h3>
+        <div class="info-box">Modifiez les informations de contact affichées dans la carte "Coordonnées".</div>
+        ${input('coTitle','Titre de la carte',d.coordTitle)}
+        <div class="form-row">
+            ${input('coAddrL','Libellé — Adresse',d.addrLabel)}
+            ${input('coAddrV','Valeur — Adresse',d.addrVal)}
+        </div>
+        <div class="form-row">
+            ${input('coPhoneL','Libellé — Téléphone',d.phoneLabel)}
+            ${input('coPhoneV','Valeur — Téléphone',d.phoneVal)}
+        </div>
+        <div class="form-row">
+            ${input('coEmailL','Libellé — Email',d.emailLabel)}
+            ${input('coEmailV','Valeur — Email',d.emailVal)}
+        </div>
+        <div class="form-row">
+            ${input('coHoursL','Libellé — Horaires',d.hoursLabel)}
+            ${input('coHoursV','Valeur — Horaires',d.hoursVal)}
+        </div>
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="SAVE.coord()">Sauvegarder</button>
+        </div>`;
+}
+window.SAVE.coord = function(){
+    data.coord = {
+        coordTitle:val('coTitle'),
+        addrLabel:val('coAddrL'),addrVal:val('coAddrV'),
+        phoneLabel:val('coPhoneL'),phoneVal:val('coPhoneV'),
+        emailLabel:val('coEmailL'),emailVal:val('coEmailV'),
+        hoursLabel:val('coHoursL'),hoursVal:val('coHoursV'),
+    };
+    saveContentToServer();
+};
+
+// --- PASSWORD ---
+function renderPassword(){
+    document.getElementById('dashMain').innerHTML = `
+        <h3>🔑 Changer le mot de passe</h3>
+        <div class="info-box">Changez votre mot de passe ci-dessous.</div>
+        ${input('curPass','Mot de passe actuel','',{type:'password'})}
+        ${input('newPass','Nouveau mot de passe','',{type:'password'})}
+        ${input('confPass','Confirmer le nouveau mot de passe','',{type:'password'})}
+        <div class="form-actions">
+            <button class="btn-gold btn-sm" onclick="changePass()">Changer le mot de passe</button>
+        </div>`;
+}
+window.changePass = async function(){
+    const cur = val('curPass');
+    const np = val('newPass');
+    const cp = val('confPass');
+    if(np.length < 4){ showToast('Minimum 4 caractères','error'); return; }
+    if(np !== cp){ showToast('Les mots de passe ne correspondent pas','error'); return; }
+    try {
+        const r = await fetch('/api/change-password', {
+            method:'POST',
+            headers:{'Content-Type':'application/json','X-Admin-Password':adminPassword},
+            body:JSON.stringify({currentPassword:cur, newPassword:np})
+        });
+        const res = await r.json();
+        if(res.ok) { adminPassword = np; showToast('Mot de passe changé ✓','success'); }
+        else showToast(res.error || 'Erreur','error');
+    } catch(e) { showToast('Erreur serveur','error'); }
+};
+
+// ---------- INIT ----------
+document.getElementById('loginPass').focus();
+
+})();
+</script>
+</body>
+</html>

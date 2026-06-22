@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Nadir Photographe | Photographe Oran</title>
+<meta name="description" content="Nadir Photographe - Photographe professionnel à Oran. Mariages, portraits & événements.">
+<meta name="theme-color" content="#1a1a1a">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<style>
+:root{--gold:#d4a843;--dark:#1a1a1a;--transition:all 0.25s ease}
+[data-theme="dark"]{--bg:#1a1a1a;--bg2:#222;--card:#2a2a2a;--text:#f0f0f0;--text2:#999;--border:#333}
+[data-theme="light"]{--bg:#f5f5f5;--bg2:#eee;--card:#fff;--text:#111;--text2:#666;--border:#ddd}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;-webkit-tap-highlight-color:transparent;padding-bottom:0;padding-top:56px}
+h1,h2,h3,h4{font-family:'Playfair Display',serif}
+.gold{color:var(--gold)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:2px}
+
+/* TOP BAR */
+.top-bar{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(26,26,26,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-bottom:1px solid var(--border)}
+.top-bar img{height:50px;width:auto}
+.theme-btn{width:36px;height:36px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.85rem;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#langBtn{width:40px;font-size:.75rem;font-weight:700;letter-spacing:.5px}
+
+/* TOP-LEFT / TOP-RIGHT */
+.top-left,.top-right{display:flex;align-items:center;gap:8px}
+.menu-btn{width:36px;height:36px;background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:.95rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:101}
+.social-links{display:flex;gap:6px;align-items:center}
+.social-links a{color:var(--text2);font-size:1.1rem;text-decoration:none}
+.desktop-nav{display:none;gap:6px}
+.desktop-nav a{color:var(--text2);font-size:.78rem;text-decoration:none;padding:6px 10px;border-radius:6px;transition:var(--transition);font-weight:500}
+.desktop-nav a:hover{color:var(--gold)}
+.desktop-nav a.active{color:var(--gold)}
+
+/* MOBILE MENU */
+.mobile-menu{position:fixed;inset:0;z-index:200;background:rgba(26,26,26,.97);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease}
+[data-theme="light"] .mobile-menu{background:rgba(245,245,245,.97)}
+.mobile-menu.open{opacity:1;pointer-events:all}
+.mobile-menu-inner{text-align:center}
+.menu-close{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--text);font-size:1.5rem;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.mobile-nav{display:flex;flex-direction:column;gap:8px}
+.mobile-nav a{color:var(--text);font-size:1.1rem;text-decoration:none;padding:12px 32px;border-radius:8px;transition:var(--transition);font-weight:500;letter-spacing:.5px}
+.mobile-nav a i{width:24px;color:var(--gold)}
+.mobile-nav a:active{background:rgba(255,255,255,.05)}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center 25%;background-repeat:no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.3) 50%,rgba(0,0,0,.5) 100%)}
+.hero-content{position:relative;z-index:2;padding:40px 20px 40px;text-align:center}
+
+/* SECTIONS */
+section{padding:48px 18px}
+.section-tag{font-size:.65rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.section-title{font-size:clamp(1.5rem,7vw,2rem);font-weight:700;margin-bottom:6px}
+.section-line{width:36px;height:3px;background:var(--gold);border-radius:2px;margin:10px auto 24px}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:var(--transition)}
+.card:active{transform:scale(.98)}
+
+/* BUTTONS */
+.btn-gold,.btn-out{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 24px;border-radius:10px;font-weight:600;font-size:.9rem;text-decoration:none;transition:var(--transition);font-family:'Inter',sans-serif;cursor:pointer}
+.btn-gold{background:var(--gold);color:#1a1a1a;border:2px solid var(--gold)}
+.btn-gold:active{opacity:.8}
+.btn-out{background:transparent;color:var(--gold);border:2px solid var(--gold)}
+.btn-out:active{background:var(--gold);color:#1a1a1a}
+
+/* GALLERY */
+.g-item{position:relative;border-radius:10px;overflow:hidden;cursor:pointer;break-inside:avoid;margin-bottom:10px}
+.g-item img{width:100%;display:block;object-fit:cover}
+.g-overlay{position:absolute;inset:0;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;opacity:0;transition:var(--transition)}
+.g-item:active .g-overlay{opacity:1}
+.g-overlay i{color:#fff;font-size:1.5rem}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.lightbox.open{opacity:1;pointer-events:all}
+.lightbox img{max-width:95vw;max-height:82vh;object-fit:contain;border-radius:6px}
+.lb-close{position:absolute;top:12px;right:12px;color:#fff;font-size:1.4rem;background:none;border:none;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);color:#fff;font-size:1.8rem;background:none;border:none;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* FILTER */
+.f-btn{padding:6px 14px;border-radius:50px;border:1px solid var(--border);background:transparent;color:var(--text2);cursor:pointer;font-size:.75rem;font-weight:500;transition:var(--transition);font-family:'Inter',sans-serif}
+.f-btn.active,.f-btn:active{border-color:var(--gold);color:var(--gold)}
+
+/* TESTIMONIAL */
+.ts-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.ts-slide{min-width:100%;padding:0 2px}
+.ts-dot{width:8px;height:8px;border-radius:50%;background:var(--text2);border:none;cursor:pointer;transition:var(--transition);padding:0}
+.ts-dot.active{background:var(--gold);width:22px;border-radius:4px}
+
+/* FORM */
+.f-input{width:100%;padding:13px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;color:var(--text);font-size:.95rem;transition:var(--transition);font-family:'Inter',sans-serif;-webkit-appearance:none}
+.f-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(212,168,67,.12)}
+.f-input.error{border-color:#ef4444}
+.f-input.success{border-color:#22c55e}
+.f-error{color:#ef4444;font-size:.75rem;margin-top:4px;display:none}
+.f-error.show{display:block}
+
+/* TOAST */
+.toast{position:fixed;top:64px;left:12px;right:12px;padding:14px 18px;border-radius:10px;color:#fff;font-size:.85rem;font-weight:500;z-index:9999;transform:translateY(-120%);transition:transform .35s ease;text-align:center}
+.toast.show{transform:translateY(0)}
+.toast.success{background:#22c55e}
+.toast.error{background:#ef4444}
+
+/* SVC ICON */
+.svc-icon{width:48px;height:48px;border-radius:12px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--gold);margin:0 auto 12px;transition:var(--transition)}
+.card:active .svc-icon{background:var(--gold);color:#1a1a1a}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .5s ease,transform .5s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.r1{transition-delay:.1s}.r2{transition-delay:.2s}.r3{transition-delay:.3s}.r4{transition-delay:.4s}
+
+/* STICKY */
+.sticky-cta{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:99;background:var(--gold);color:#1a1a1a;padding:10px 20px;border-radius:8px;font-weight:600;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 4px 20px rgba(212,168,67,.3);font-family:'Inter',sans-serif;font-size:.82rem;transition:var(--transition);white-space:nowrap}
+.sticky-cta:hover{transform:translateX(-50%) scale(1.05);box-shadow:0 6px 28px rgba(212,168,67,.45)}
+.sticky-cta:active{transform:translateX(-50%) scale(.97)}
+.sticky-cta.hidden{display:none}
+@keyframes pulse-cta{0%,100%{box-shadow:0 4px 20px rgba(212,168,67,.3)}50%{box-shadow:0 4px 32px rgba(212,168,67,.55)}}
+.sticky-cta{animation:pulse-cta 2s ease-in-out infinite}
+
+.back-top{position:fixed;bottom:70px;left:12px;width:48px;height:48px;background:var(--gold);color:#1a1a1a;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;z-index:300;border:none;box-shadow:0 4px 20px rgba(212,168,67,.5)}
+.back-top:active{transform:scale(.9)}
+
+/* MASONRY-LIKE GRID */
+.masonry{display:flex;flex-wrap:wrap;gap:10px}
+.masonry .g-item{width:calc(50% - 5px)}
+.masonry .g-item:first-child{width:100%}
+
+@media(min-width:768px){
+    body{padding-bottom:0;padding-top:64px}
+    .top-bar{display:flex!important;height:64px;padding:0 28px}
+    .top-left,.top-right{gap:16px}
+    .menu-btn,.social-links{display:none}
+    .desktop-nav{display:flex}
+    .desktop-nav a{font-size:.85rem}
+    .sticky-cta{display:none}
+    .hero{min-height:100vh}
+    .hero-content{padding:60px 40px 80px}
+    .hero-content h1{font-size:clamp(3rem,5vw,5rem)!important}
+    .hero-content p{font-size:1.1rem!important;max-width:500px!important}
+    .section{padding:80px 40px}
+    section{padding:80px 40px;max-width:1100px;margin:0 auto}
+    #about .reveal.r1 img{max-height:450px}
+    #about .reveal.r2 h3{font-size:1.6rem}
+    #about .reveal.r2 p{font-size:1rem}
+    .masonry .g-item{width:calc(33.33% - 7px)}
+    .masonry .g-item:first-child{width:calc(66.66% - 5px)}
+    #services>div{display:grid!important;grid-template-columns:repeat(3,1fr);gap:20px}
+    #contact>div{display:grid!important;grid-template-columns:1fr 1fr;gap:24px}
+    .card{padding:28px}
+    .section-line{margin-bottom:40px}
+    section{scroll-margin-top:0}
+    .ts-slide{padding:0 40px}
+    .hero-bg{background-position:center 30%}
+}
+@media(min-width:1024px){
+    .masonry .g-item{width:calc(25% - 8px)}
+    .masonry .g-item:first-child{width:calc(50% - 5px)}
+}
+
+/* ANIMATIONS */
+/* Hero staggered entrance */
+.hero-content>*{opacity:0;animation:heroFadeUp .55s ease forwards}
+.hero-content>:nth-child(1){animation-delay:.1s}
+.hero-content>:nth-child(2){animation-delay:.3s}
+.hero-content>:nth-child(3){animation-delay:.5s}
+.hero-content>:nth-child(4){animation-delay:.7s}
+@keyframes heroFadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* Gallery image zoom */
+.g-item img{transition:transform .4s ease}
+.g-item:active img,.g-item:hover img{transform:scale(1.06)}
+
+/* Service cards hover lift */
+@media(hover:hover){
+    .card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,.12)}
+}
+[data-theme="dark"] .card:hover{box-shadow:0 8px 28px rgba(0,0,0,.35)}
+
+/* Section divider width grow on reveal */
+.section-line{width:0;transition:width .65s ease .15s}
+.reveal.visible .section-line{width:36px}
+
+/* Reduced motion */
+@media(prefers-reduced-motion:reduce){
+    *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
+/* Stats counter */
+.stat-num{font-size:1.4rem;font-weight:700;color:var(--gold)}
+
+/* RTL */
+[dir="rtl"]{text-align:right}
+[dir="rtl"] .hero-content{text-align:center}
+[dir="rtl"] .section-line{margin:10px auto 24px}
+[dir="rtl"] .top-left{order:2}
+[dir="rtl"] .top-right{order:0}
+[dir="rtl"] .desktop-nav a{letter-spacing:0}
+[dir="rtl"] .mobile-menu-inner{direction:rtl}
+[dir="rtl"] .mobile-nav a i{margin-left:8px;margin-right:0}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+    <div class="top-left">
+        <button class="menu-btn" id="menuBtn" aria-label="Menu"><i class="fas fa-bars"></i></button>
+        <div class="social-links">
+            <a href="https://web.facebook.com/nadir.photographee" target="_blank" rel="noopener" aria-label="Facebook" style="color:var(--text2);font-size:1.1rem;text-decoration:none"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/sekkal.nadir46/" target="_blank" rel="noopener" aria-label="Instagram" style="color:var(--text2);font-size:1.1rem;text-decoration:none"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/213791409125" target="_blank" rel="noopener" aria-label="WhatsApp" style="color:var(--text2);font-size:1.1rem;text-decoration:none"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+    <a href="/" onclick="event.preventDefault();history.scrollRestoration='manual';location.reload()" style="display:flex;align-items:center"><img src="logo.png" alt="Nadir" style="cursor:pointer"></a>
+    <div class="top-right">
+        <nav class="desktop-nav" id="desktopNav">
+            <a href="#about" data-lang="menu_about">About us</a>
+            <a href="#services" data-lang="menu_services">Services</a>
+            <a href="#portfolio" data-lang="menu_work">Our Work</a>
+            <a href="#testimonials" data-lang="menu_testimonial">Testimonial</a>
+            <a href="#contact" data-lang="menu_contact">Contact us</a>
+        </nav>
+        <button class="theme-btn" id="langBtn" aria-label="Langue"><span id="langLabel">FR</span></button>
+        <button class="theme-btn" id="themeBtn" aria-label="Mode"><i class="fas fa-moon" id="themeIcon"></i></button>
+    </div>
+</div>
+
+<!-- MOBILE MENU OVERLAY -->
+<div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <button class="menu-close" id="menuClose" aria-label="Fermer"><i class="fas fa-times"></i></button>
+        <nav class="mobile-nav">
+            <a href="#about" data-lang="menu_about"><i class="fas fa-user"></i> About us</a>
+            <a href="#services" data-lang="menu_services"><i class="fas fa-camera"></i> Services</a>
+            <a href="#portfolio" data-lang="menu_work"><i class="fas fa-images"></i> Our Work</a>
+            <a href="#testimonials" data-lang="menu_testimonial"><i class="fas fa-star"></i> Testimonial</a>
+            <a href="#contact" data-lang="menu_contact"><i class="fas fa-envelope"></i> Contact us</a>
+        </nav>
+        <div style="display:flex;gap:18px;margin-top:32px">
+            <a href="https://web.facebook.com/nadir.photographee" target="_blank" rel="noopener" style="color:var(--text2);font-size:1.3rem;text-decoration:none"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/sekkal.nadir46/" target="_blank" rel="noopener" style="color:var(--text2);font-size:1.3rem;text-decoration:none"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/213791409125" target="_blank" rel="noopener" style="color:var(--text2);font-size:1.3rem;text-decoration:none"><i class="fab fa-whatsapp"></i></a>
+        </div>
+    </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-bg" style="background-image:url('hero')"></div>
+    <div class="hero-content">
+        <p class="gold" style="font-size:.7rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px" data-lang="hero_tag">Photographe Professionnel</p>
+        <h1 style="font-size:clamp(2.2rem,10vw,3.5rem);color:#fff;line-height:1.1;margin-bottom:10px" data-lang-html="hero_title">Nadir<br><span class="gold">Photographe</span></h1>
+        <p style="color:var(--text2);font-size:.9rem;margin:0 auto 24px;line-height:1.7;max-width:360px" data-lang="hero_desc">Immortalisez vos moments précieux avec élégance. Mariages, portraits & événements à Oran.</p>
+        <div style="display:flex;gap:10px;justify-content:center">
+            <a href="#portfolio" class="btn-gold" data-lang="portfolio_btn"><i class="fas fa-images"></i> Portfolio</a>
+            <a href="#contact" class="btn-out" data-lang="reserve_btn"><i class="fas fa-calendar"></i> Réserver</a>
+        </div>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" style="background:var(--bg2)">
+    <div style="text-align:center" class="reveal">
+        <p class="gold section-tag" data-lang="about_tag">À propos</p>
+        <h2 class="section-title" data-lang="about_title">Qui suis-je ?</h2>
+        <div class="section-line"></div>
+    </div>
+    <div class="reveal r1">
+        <img src="Qui suis-je.jpg" alt="Nadir" style="width:100%;border-radius:12px;margin-bottom:18px;max-height:320px;object-fit:cover">
+    </div>
+    <div class="reveal r2">
+        <h3 style="font-size:1.2rem;margin-bottom:10px" data-lang-html="about_subtitle">Capturer l'émotion, <span class="gold">créer des souvenirs</span></h3>
+        <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:10px" data-lang="about_desc1">Basé à Oran, passionné par la photographie depuis plus de 5 ans. Chaque cliché raconte une histoire unique.</p>
+        <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:20px" data-lang="about_desc2">Mariages, portraits, événements — un service sur mesure avec une qualité irréprochable.</p>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px">
+                <div class="card" style="padding:14px;text-align:center"><div class="stat-num" data-target="500">0</div><div style="font-size:.7rem;color:var(--text2);margin-top:2px" data-lang="stat_seances">Séances</div></div>
+                <div class="card" style="padding:14px;text-align:center"><div class="stat-num" data-target="300">0</div><div style="font-size:.7rem;color:var(--text2);margin-top:2px" data-lang="stat_clients">Clients</div></div>
+                <div class="card" style="padding:14px;text-align:center"><div class="stat-num" data-target="5">0</div><div style="font-size:.7rem;color:var(--text2);margin-top:2px" data-lang="stat_annees">Années</div></div>
+        </div>
+        <a href="#contact" class="btn-gold" style="width:100%" data-lang="contactez_btn"><i class="fas fa-comment"></i> Contactez-moi</a>
+    </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+    <div style="text-align:center" class="reveal">
+        <p class="gold section-tag" data-lang="portfolio_tag">Portfolio</p>
+        <h2 class="section-title" data-lang="portfolio_title">Mes Réalisations</h2>
+        <div class="section-line"></div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px" class="reveal r1">
+        <button class="f-btn" data-f="all" data-lang="filter_tous">Tous</button>
+        <button class="f-btn" data-f="animaux" data-lang="filter_animaux">Animaux</button>
+        <button class="f-btn" data-f="personnes" data-lang="filter_personnes">Personnes</button>
+        <button class="f-btn active" data-f="nature" data-lang="filter_nature">Nature</button>
+    </div>
+    <div class="masonry" id="galleryGrid"></div>
+</section>
+
+<!-- SERVICES -->
+<section id="services" style="background:var(--bg2)">
+    <div style="text-align:center" class="reveal">
+        <p class="gold section-tag" data-lang="services_tag">Services</p>
+        <h2 class="section-title" data-lang="services_title">Ce que je propose</h2>
+        <div class="section-line"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+        <div class="card reveal" style="text-align:center">
+            <div class="svc-icon"><i class="fas fa-heart"></i></div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:6px" data-lang="svc_mariage">Mariage</h3>
+            <p style="color:var(--text2);font-size:.85rem;line-height:1.7;margin-bottom:10px" data-lang="svc_mariage_desc">De la préparation à la réception, chaque instant capturé avec une sensibilité artistique.</p>
+        </div>
+        <div class="card reveal r1" style="text-align:center">
+            <div class="svc-icon"><i class="fas fa-user"></i></div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:6px" data-lang="svc_portrait">Portrait</h3>
+            <p style="color:var(--text2);font-size:.85rem;line-height:1.7;margin-bottom:10px" data-lang="svc_portrait_desc">Séances en studio ou extérieur. Un éclairage soigné pour révéler votre personnalité.</p>
+        </div>
+        <div class="card reveal r2" style="text-align:center">
+            <div class="svc-icon"><i class="fas fa-calendar-check"></i></div>
+            <h3 style="font-size:1.1rem;font-weight:700;margin-bottom:6px" data-lang="svc_events">Événements</h3>
+            <p style="color:var(--text2);font-size:.85rem;line-height:1.7;margin-bottom:10px" data-lang="svc_events_desc">Conférences, galas, fêtes — une couverture discrète et complète.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+    <div style="text-align:center" class="reveal">
+        <p class="gold section-tag" data-lang="testimonials_tag">Témoignages</p>
+        <h2 class="section-title" data-lang="testimonials_title">Ce que disent mes clients</h2>
+        <div class="section-line"></div>
+    </div>
+    <div class="reveal r1" style="position:relative;overflow:hidden">
+        <div class="ts-track" id="tsTrack">
+            <div class="ts-slide">
+                <div class="card" style="text-align:center">
+                    <div class="gold" style="font-size:1.8rem;margin-bottom:10px">"</div>
+                    <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:16px;font-style:italic" data-lang="ts1_text">"Nadir a photographié notre mariage. Chaque photo raconte une partie de notre histoire. Exceptionnel."</p>
+                    <img id="tsImg1" src="animaux/657868126_18076164980544811_8117737852668531970_n.jpg" alt="Sarah & Ahmed" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px">
+                    <h4 style="font-weight:700;font-size:.9rem" data-lang="ts1_name">Sarah &amp; Ahmed</h4>
+                    <p style="color:var(--text2);font-size:.7rem" data-lang="ts1_label">Mariage, Juin 2025</p>
+                </div>
+            </div>
+            <div class="ts-slide">
+                <div class="card" style="text-align:center">
+                    <div class="gold" style="font-size:1.8rem;margin-bottom:10px">"</div>
+                    <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:16px;font-style:italic" data-lang="ts2_text">"Bluffée par le résultat ! Nadir met en valeur avec une sensibilité rare. Je recommande."</p>
+                    <img id="tsImg2" src="personnes/655609491_18075395573544811_3104698910527199202_n.jpg" alt="Amel" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px">
+                    <h4 style="font-weight:700;font-size:.9rem" data-lang="ts2_name">Amel B.</h4>
+                    <p style="color:var(--text2);font-size:.7rem" data-lang="ts2_label">Portrait, Mars 2025</p>
+                </div>
+            </div>
+            <div class="ts-slide">
+                <div class="card" style="text-align:center">
+                    <div class="gold" style="font-size:1.8rem;margin-bottom:10px">"</div>
+                    <p style="color:var(--text2);font-size:.88rem;line-height:1.8;margin-bottom:16px;font-style:italic" data-lang="ts3_text">"Notre conférence annuelle magnifiquement capturée. Professionnalisme et discrétion."</p>
+                    <img id="tsImg3" src="personnes/631920755_18070569473544811_8718289216087484388_n.jpg" alt="Karim" style="width:44px;height:44px;border-radius:50%;object-fit:cover;margin:0 auto 6px">
+                    <h4 style="font-weight:700;font-size:.9rem" data-lang="ts3_name">Karim M.</h4>
+                    <p style="color:var(--text2);font-size:.7rem" data-lang="ts3_label">Événement, Janvier 2025</p>
+                </div>
+            </div>
+        </div>
+        <div style="display:flex;justify-content:center;gap:6px;margin-top:14px" id="tsDots">
+            <button class="ts-dot active" data-i="0"></button>
+            <button class="ts-dot" data-i="1"></button>
+            <button class="ts-dot" data-i="2"></button>
+        </div>
+        <div style="display:flex;justify-content:center;gap:32px;margin-top:10px">
+            <button id="tsPrev" style="background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer;padding:6px"><i class="fas fa-chevron-left"></i></button>
+            <button id="tsNext" style="background:none;border:none;color:var(--text2);font-size:1.2rem;cursor:pointer;padding:6px"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg2)">
+    <div style="text-align:center" class="reveal">
+        <p class="gold section-tag" data-lang="contact_tag">Contact</p>
+        <h2 class="section-title" data-lang="contact_title">Prenons rendez-vous</h2>
+        <div class="section-line"></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px">
+        <div class="card reveal">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px" data-lang="form_title">Envoyez un message</h3>
+            <form id="contactForm" novalidate>
+                <div style="margin-bottom:10px">
+                    <input type="text" class="f-input" id="fName" placeholder="Votre nom *" required data-lang-ph="name_ph">
+                    <div class="f-error" id="nameErr" data-lang="name_err">Requis.</div>
+                </div>
+                <div style="margin-bottom:10px">
+                    <input type="email" class="f-input" id="fEmail" placeholder="Votre email *" required data-lang-ph="email_ph">
+                    <div class="f-error" id="emailErr" data-lang="email_err">Email invalide.</div>
+                </div>
+                <div style="margin-bottom:10px">
+                    <input type="tel" class="f-input" id="fPhone" placeholder="Votre téléphone" data-lang-ph="phone_ph">
+                </div>
+                <div style="margin-bottom:14px">
+                    <textarea class="f-input" id="fMsg" rows="3" placeholder="Votre message *" required data-lang-ph="msg_ph"></textarea>
+                    <div class="f-error" id="msgErr" data-lang="msg_err">Min 10 car.</div>
+                </div>
+                <button type="submit" class="btn-gold" style="width:100%" data-lang="submit"><i class="fas fa-paper-plane"></i> Envoyer</button>
+            </form>
+        </div>
+        <div class="card reveal r1">
+            <h3 style="font-size:1rem;font-weight:700;margin-bottom:14px" data-lang="coord_title">Coordonnées</h3>
+            <div style="display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.85rem"><i class="fas fa-map-marker-alt"></i></div>
+                    <div><p style="font-weight:600;font-size:.85rem" data-lang="coord_addr">Adresse</p><p style="color:var(--text2);font-size:.8rem" data-lang="address_val">Oran, Algérie</p></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.85rem"><i class="fas fa-phone"></i></div>
+                    <div><p style="font-weight:600;font-size:.85rem" data-lang="coord_phone">Téléphone</p><p style="color:var(--text2);font-size:.8rem" data-lang="phone_val">+213 555 12 34 56</p></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.85rem"><i class="fas fa-envelope"></i></div>
+                    <div><p style="font-weight:600;font-size:.85rem" data-lang="coord_email">Email</p><p style="color:var(--text2);font-size:.8rem" data-lang="email_val">contact@nadirphotographe.dz</p></div>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <div style="width:36px;height:36px;border-radius:8px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);flex-shrink:0;font-size:.85rem"><i class="fas fa-clock"></i></div>
+                    <div><p style="font-weight:600;font-size:.85rem" data-lang="coord_hours">Horaires</p><p style="color:var(--text2);font-size:.8rem" data-lang="hours_val">Lun - Sam : 9h-19h</p></div>
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;margin-top:16px">
+                <a href="https://instagram.com" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:10px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:1rem"><i class="fab fa-instagram"></i></a>
+                <a href="https://facebook.com" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:10px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:1rem"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://youtube.com" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:10px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:1rem"><i class="fab fa-youtube"></i></a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener" style="width:40px;height:40px;border-radius:10px;background:rgba(212,168,67,.1);display:flex;align-items:center;justify-content:center;color:var(--gold);text-decoration:none;font-size:1rem"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer style="padding:24px 18px;background:#111;text-align:center">
+    <p style="color:var(--text2);font-size:.75rem" data-lang-html="footer_copy">&copy; 2026 <span class="gold">Nadir Photographe</span>. Tous droits réservés.</p>
+    <p style="color:var(--text2);font-size:.7rem;margin-top:8px"><span data-lang="designed">Designed by</span> <a href="https://files-neon-ten.vercel.app/#top" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none">Zidlyweb.com</a></p>
+</footer>
+
+<a href="#contact" class="sticky-cta" id="stickyCta" data-lang="sticky_cta"><i class="fas fa-calendar-check"></i> Réserver un Shooting</a>
+
+<button class="back-top" id="backTop"><i class="fas fa-arrow-up"></i></button>
+
+<div class="lightbox" id="lightbox">
+    <button class="lb-close" id="lbClose"><i class="fas fa-times"></i></button>
+    <button class="lb-nav" style="left:4px" id="lbPrev"><i class="fas fa-chevron-left"></i></button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav" style="right:4px" id="lbNext"><i class="fas fa-chevron-right"></i></button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+'use strict';
+
+const html = document.documentElement;
+const themeBtn = document.getElementById('themeBtn');
+const themeIcon = document.getElementById('themeIcon');
+function setTheme(m){
+    html.setAttribute('data-theme',m);
+    localStorage.setItem('theme',m);
+    themeIcon.className = m === 'dark' ? 'fas fa-moon' : 'fas fa-sun';
+}
+setTheme(localStorage.getItem('theme')||'dark');
+themeBtn.addEventListener('click',()=>{
+    setTheme(html.getAttribute('data-theme')==='dark'?'light':'dark');
+});
+
+// LANG SWITCH
+const langData={
+    fr:{
+        hero_tag:"Photographe Professionnel",hero_title:'Nadir<br><span class="gold">Photographe</span>',
+        hero_desc:"Immortalisez vos moments précieux avec élégance. Mariages, portraits & événements à Oran.",
+        portfolio_btn:"Portfolio",reserve_btn:"Réserver",about_tag:"À propos",
+        about_title:"Qui suis-je ?",about_subtitle:'Capturer l\'émotion, <span class="gold">créer des souvenirs</span>',
+        about_desc1:"Basé à Oran, passionné par la photographie depuis plus de 5 ans. Chaque cliché raconte une histoire unique.",
+        about_desc2:"Mariages, portraits, événements — un service sur mesure avec une qualité irréprochable.",
+        stat_seances:"Séances",stat_clients:"Clients",stat_annees:"Années",contactez_btn:"Contactez-moi",
+        portfolio_tag:"Portfolio",portfolio_title:"Mes Réalisations",
+        filter_tous:"Tous",filter_animaux:"Animaux",filter_personnes:"Personnes",filter_nature:"Nature",
+        services_tag:"Services",services_title:"Ce que je propose",
+        svc_mariage:"Mariage",svc_mariage_desc:"De la préparation à la réception, chaque instant capturé avec une sensibilité artistique.",
+        svc_portrait:"Portrait",svc_portrait_desc:"Séances en studio ou extérieur. Un éclairage soigné pour révéler votre personnalité.",
+        svc_events:"Événements",svc_events_desc:"Conférences, galas, fêtes — une couverture discrète et complète.",
+        testimonials_tag:"Témoignages",testimonials_title:"Ce que disent mes clients",
+        ts1_text:"\"Nadir a photographié notre mariage. Chaque photo raconte une partie de notre histoire. Exceptionnel.\"",
+        ts1_name:"Sarah & Ahmed",ts1_label:"Mariage, Juin 2025",
+        ts2_text:"\"Bluffée par le résultat ! Nadir met en valeur avec une sensibilité rare. Je recommande.\"",
+        ts2_name:"Amel B.",ts2_label:"Portrait, Mars 2025",
+        ts3_text:"\"Notre conférence annuelle magnifiquement capturée. Professionnalisme et discrétion.\"",
+        ts3_name:"Karim M.",ts3_label:"Événement, Janvier 2025",
+        contact_tag:"Contact",contact_title:"Prenons rendez-vous",
+        form_title:"Envoyez un message",
+        name_ph:"Votre nom *",email_ph:"Votre email *",phone_ph:"Votre téléphone",msg_ph:"Votre message *",
+        submit:"Envoyer",coord_title:"Coordonnées",
+        coord_addr:"Adresse",coord_phone:"Téléphone",coord_email:"Email",coord_hours:"Horaires",
+        address_val:"Oran, Algérie",phone_val:"+213 555 12 34 56",email_val:"contact@nadirphotographe.dz",
+        hours_val:"Lun - Sam : 9h-19h",
+        footer_copy:'&copy; 2026 <span class="gold">Nadir Photographe</span>. Tous droits réservés.',
+        designed:"Designed by",sticky_cta:"Réserver un Shooting",
+        menu_about:"About us",menu_services:"Services",menu_work:"Our Work",menu_testimonial:"Testimonial",menu_contact:"Contact us",
+        name_err:"Requis.",email_err:"Email invalide.",msg_err:"Min 10 car.",
+        toast_success:"Message envoyé !",toast_error:"Corrigez les champs en rouge.",
+    },
+    ar:{
+        hero_tag:"مصور محترف",
+        hero_title:'نادر<br><span class="gold">مصور</span>',
+        hero_desc:"خلّد لحظاتك الثمينة مع لمسة فنية. أعراس، صور شخصية ومناسبات في وهران.",
+        portfolio_btn:"أعمالي",reserve_btn:"احجز",about_tag:"عنّي",
+        about_title:"من أنا ؟",
+        about_subtitle:'ألتقط المشاعر، <span class="gold">أصنع الذكريات</span>',
+        about_desc1:"مقيم في وهران، شغوف بالتصوير منذ أكثر من 5 سنوات. كل صورة تحكي قصة فريدة.",
+        about_desc2:"أعراس، صور شخصية، مناسبات — خدمة مخصصة بجودة لا تُضاهى.",
+        stat_seances:"جلسة",stat_clients:"عميل",stat_annees:"سنة",contactez_btn:"اتصل بي",
+        portfolio_tag:"أعمالي",portfolio_title:"إنجازاتي",
+        filter_tous:"الكل",filter_animaux:"حيوانات",filter_personnes:"أشخاص",filter_nature:"طبيعة",
+        services_tag:"خدماتي",services_title:"ما أقدمه",
+        svc_mariage:"الأعراس",
+        svc_mariage_desc:"من التحضيرات إلى حفل الاستقبال، كل لحظة تُلتقط بحسّ فني.",
+        svc_portrait:"صور شخصية",
+        svc_portrait_desc:"جلسات في الاستوديو أو في الهواء الطلق. إضاءة احترافية تُبرز شخصيتك.",
+        svc_events:"المناسبات",
+        svc_events_desc:"مؤتمرات، حفلات، سهرات — تغطية كاملة بكل احترافية.",
+        testimonials_tag:"شهادات",testimonials_title:"ماذا يقول عملائي",
+        ts1_text:"\"نادر صوّر عرسنا. كل صورة تحكي جزءًا من قصتنا. رائع.\"",
+        ts1_name:"سارة وأحمد",ts1_label:"عرس، جوان 2025",
+        ts2_text:"\"انبهرت بالنتيجة! نادر يُبرز الجمال بحسّ مرهف. أنصح به.\"",
+        ts2_name:"أمل ب.",ts2_label:"صورة شخصية، مارس 2025",
+        ts3_text:"\"مؤتمرنا السنوي صُوّر بشكل رائع. احترافية ولباقة.\"",
+        ts3_name:"كريم م.",ts3_label:"مناسبة، جانفي 2025",
+        contact_tag:"اتصل بي",contact_title:"احجز موعداً",
+        form_title:"أرسل رسالة",
+        name_ph:"اسمك *",email_ph:"بريدك الإلكتروني *",phone_ph:"رقم هاتفك",msg_ph:"رسالتك *",
+        submit:"إرسال",coord_title:"معلومات الاتصال",
+        coord_addr:"العنوان",coord_phone:"الهاتف",coord_email:"البريد الإلكتروني",coord_hours:"مواعيد العمل",
+        address_val:"وهران، الجزائر",phone_val:"+213 555 12 34 56",email_val:"contact@nadirphotographe.dz",
+        hours_val:"السبت - الإثنين : 9ص-7م",
+        footer_copy:'&copy; 2026 <span class="gold">نادر للتصوير</span>. جميع الحقوق محفوظة.',
+        designed:"تصميم",sticky_cta:"احجز جلسة تصوير",
+        menu_about:"عنّي",menu_services:"خدماتي",menu_work:"أعمالي",menu_testimonial:"شهادات",menu_contact:"اتصل بي",
+        name_err:"مطلوب",email_err:"بريد غير صالح",msg_err:"10 أحرف على الأقل",
+        toast_success:"!تم إرسال الرسالة",toast_error:".صحّح الحقول الحمراء",
+    }
+};
+const langBtn=document.getElementById('langBtn');
+const langLabel=document.getElementById('langLabel');
+
+// ----- CONTENT LOADING (API → localStorage → defaults) -----
+const _langMap = {
+    hero_tag:'hero.tag',hero_title:'hero.titleHtml',hero_desc:'hero.desc',
+    about_tag:'about.tag',about_title:'about.title',about_subtitle:'about.subtitleHtml',
+    about_desc1:'about.desc1',about_desc2:'about.desc2',contactez_btn:'about.btn',
+    portfolio_tag:'portfolio.tag',portfolio_title:'portfolio.title',
+    services_tag:'services.tag',services_title:'services.title',
+    testimonials_tag:'testimonials.tag',testimonials_title:'testimonials.title',
+    contact_tag:'contact.tag',contact_title:'contact.title',form_title:'contact.formTitle',
+    name_ph:'contact.namePh',email_ph:'contact.emailPh',phone_ph:'contact.phonePh',msg_ph:'contact.msgPh',submit:'contact.submit',
+    coord_addr:'coord.addrLabel',coord_phone:'coord.phoneLabel',coord_email:'coord.emailLabel',coord_hours:'coord.hoursLabel',
+    address_val:'coord.addrVal',phone_val:'coord.phoneVal',email_val:'coord.emailVal',hours_val:'coord.hoursVal',
+    coord_title:'coord.coordTitle',
+    footer_copy:'footer.copyrightHtml',designed:'footer.designed',sticky_cta:'hero.stickyCta',
+    menu_about:'about.tag',menu_services:'services.tag',menu_work:'portfolio.tag',menu_testimonial:'testimonials.tag',menu_contact:'contact.tag',
+    filter_tous:'portfolio.filters.tous',filter_animaux:'portfolio.filters.animaux',filter_personnes:'portfolio.filters.personnes',filter_nature:'portfolio.filters.nature',
+    stat_seances:'about.statLabels.seances',stat_clients:'about.statLabels.clients',stat_annees:'about.statLabels.annees',
+    svc_mariage:'services.cards.0.title',svc_mariage_desc:'services.cards.0.desc',
+    svc_portrait:'services.cards.1.title',svc_portrait_desc:'services.cards.1.desc',
+    svc_events:'services.cards.2.title',svc_events_desc:'services.cards.2.desc',
+    ts1_text:'testimonials.reviews.0.text',ts1_name:'testimonials.reviews.0.name',ts1_label:'testimonials.reviews.0.label',
+    ts2_text:'testimonials.reviews.1.text',ts2_name:'testimonials.reviews.1.name',ts2_label:'testimonials.reviews.1.label',
+    ts3_text:'testimonials.reviews.2.text',ts3_name:'testimonials.reviews.2.name',ts3_label:'testimonials.reviews.2.label',
+};
+
+function applySiteContent(sc){
+    if(!sc) return;
+    window._siteContent = sc;
+    Object.keys(_langMap).forEach(k=>{
+        const path=_langMap[k].split('.');
+        let v=sc;
+        for(const p of path){if(v&&v[p]!==undefined)v=v[p];else{v=undefined;break}}
+        if(v!==undefined&&v!==null&&v!==''){langData.fr[k]=v;if(k==='hero_desc'&&typeof v==='string')langData.ar.hero_desc=v}
+    });
+    if(sc.hero&&sc.hero.bg)window._heroBg=sc.hero.bg;
+    if(sc.about&&sc.about.img)window._aboutImg=sc.about.img;
+    // Apply visual changes
+    if(window._heroBg){const hb=document.querySelector('.hero-bg');if(hb)hb.style.backgroundImage="url('"+window._heroBg+"')"}
+    if(window._aboutImg){const ai=document.querySelector('#about img');if(ai)ai.src=window._aboutImg}
+    if(sc.about&&sc.about.statVals){
+        const sv=sc.about.statVals;
+        document.querySelectorAll('.stat-num').forEach((el,i)=>{
+            const targets=[sv.seances,sv.clients,sv.annees];
+            if(targets[i]!==undefined)el.dataset.target=targets[i];
+        });
+    }
+    if(sc.testimonials&&sc.testimonials.reviews){
+        const revs=sc.testimonials.reviews;
+        ['tsImg1','tsImg2','tsImg3'].forEach((id,i)=>{
+            if(revs[i]&&revs[i].img){const el=document.getElementById(id);if(el)el.src=revs[i].img}
+        });
+    }
+    setLang(html.getAttribute('dir')==='rtl'?'ar':'fr');
+    buildGallery();
+}
+
+// 1) Load from localStorage (immediate)
+try {
+    const ls = JSON.parse(localStorage.getItem('site_content'));
+    if(ls) applySiteContent(ls);
+} catch(e) {}
+
+// 2) Load from API (async, fresher)
+(async function(){
+    try {
+        const r = await fetch('/api/content');
+        if(r.ok) applySiteContent(await r.json());
+    } catch(e) {}
+})();
+
+function setLang(l){
+    localStorage.setItem('lang',l);
+    langLabel.textContent=l.toUpperCase();
+    html.setAttribute('dir',l==='ar'?'rtl':'ltr');
+    document.querySelectorAll('[data-lang]').forEach(el=>{
+        const k=el.dataset.lang;
+        if(langData[l]&&langData[l][k]) el.textContent=langData[l][k];
+    });
+    document.querySelectorAll('[data-lang-html]').forEach(el=>{
+        const k=el.dataset.langHtml;
+        if(langData[l]&&langData[l][k]) el.innerHTML=langData[l][k];
+    });
+    document.querySelectorAll('[data-lang-ph]').forEach(el=>{
+        const k=el.dataset.langPh;
+        if(langData[l]&&langData[l][k]) el.placeholder=langData[l][k];
+    });
+}
+const savedLang=localStorage.getItem('lang')||'fr';
+setLang(savedLang);
+
+langBtn.addEventListener('click',()=>{
+    setLang(html.getAttribute('dir')==='rtl'?'fr':'ar');
+});
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+        const t=document.querySelector(a.getAttribute('href'));
+        if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}
+    });
+});
+
+// MOBILE MENU
+const menuBtn=document.getElementById('menuBtn');
+const menuClose=document.getElementById('menuClose');
+const menuOverlay=document.getElementById('mobileMenu');
+if(menuBtn&&menuOverlay){
+    function openMenu(){menuOverlay.classList.add('open');document.body.style.overflow='hidden'}
+    function closeMenu(){menuOverlay.classList.remove('open');document.body.style.overflow=''}
+    menuBtn.addEventListener('click',openMenu);
+    menuClose.addEventListener('click',closeMenu);
+    menuOverlay.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click',closeMenu);
+    });
+    menuOverlay.addEventListener('click',e=>{if(e.target===menuOverlay)closeMenu()});
+}
+
+// DESKTOP NAV ACTIVE
+const navLinks=document.querySelectorAll('.desktop-nav a');
+if(navLinks.length){
+    function updateNav(){
+        let cur='';
+        secs.forEach(s=>{
+            const t=s.offsetTop-80;
+            if(window.scrollY>=t&&window.scrollY<t+s.offsetHeight) cur=s.id;
+        });
+        navLinks.forEach(l=>l.classList.toggle('active',l.dataset.sec||l.getAttribute('href')==='#'+cur));
+    }
+    window.addEventListener('scroll',updateNav);
+    window.addEventListener('load',updateNav);
+}
+
+// ACTIVE NAV
+const secs=document.querySelectorAll('section[id]');
+
+// STATS COUNTER
+const statNums=document.querySelectorAll('.stat-num');
+if(statNums.length){
+    const obs=new IntersectionObserver(entries=>{
+        entries.forEach(e=>{
+            if(e.isIntersecting){
+                const el=e.target;
+                el.textContent='0';
+                const target=parseInt(el.dataset.target);
+                const dur=1500;
+                const start=performance.now();
+                function tick(now){
+                    const p=Math.min((now-start)/dur,1);
+                    el.textContent=Math.floor(p*target)+'+';
+                    if(p<1)requestAnimationFrame(tick);
+                }
+                requestAnimationFrame(tick);
+                obs.unobserve(el);
+            }
+        });
+    },{threshold:.5});
+    statNums.forEach(s=>obs.observe(s));
+}
+
+// REVEAL
+document.querySelectorAll('.reveal').forEach(el=>{
+    new IntersectionObserver(entries=>{
+        entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+    },{threshold:.1}).observe(el);
+});
+
+// PARALLAX HERO
+const heroBg=document.querySelector('.hero-bg');
+window.addEventListener('scroll',()=>{
+    if(heroBg) heroBg.style.transform=`scale(1.08) translateY(${window.scrollY*.12}px)`;
+});
+
+// GALLERY — rebuildable function
+const _galleryDefaults = {
+    animaux:[
+        "655522512_18074595932544811_2092791421094973838_n.jpeg","656141606_18074595956544811_5422949056879872962_n.jpeg","656154985_18074595974544811_842354422476565123_n.jpeg","656267223_18074595944544811_4025714421883531581_n.jpeg","656691047_18075740885544811_1572758875530422806_n.jpg","657375443_18075740867544811_4025264565729789751_n.jpg","657598470_18075740894544811_3830594473966133759_n.jpg","657868126_18076164980544811_8117737852668531970_n.jpg","658427757_18076164971544811_2212522033537935278_n.jpg","659091134_18076141226544811_6841194760601629864_n.jpg","660009356_18076141217544811_1090159075915895187_n.jpg","660373874_18076378868544811_3767661938157813293_n.jpg","660782674_18076378841544811_270060695383813589_n.jpg","661476653_18076378871544811_2272447410101318458_n.jpg","661712608_18080456945544811_5378660948646479037_n.jpg","670876232_18080395658544811_7347671551076842870_n.jpeg","670899699_18080395577544811_5815882534822196993_n.jpeg","688493286_18080456936544811_4780646411047549323_n.jpg","688925009_18080395568544811_1716273865615171414_n.jpeg","689030145_18080456954544811_2481852443130953819_n.jpg","703240338_18081386021544811_236673104007119440_n.jpeg","703658238_18081386012544811_2278522438933274348_n.jpeg","704731828_18081385988544811_6837787142836045444_n.jpeg","705214096_18081386030544811_2768638941356838524_n.jpeg"
+    ],
+    nature:[
+        "651923446_18073901756544811_1244935390403618617_n.jpeg","671077794_18078149717544811_1651171490673738484_n.jpg","701019819_18081323669544811_7798488996905153336_n.jpeg","703745855_18081323651544811_3910818597937568274_n.jpeg","706035805_18081886025544811_2844210660062282206_n.jpeg","706611486_18081886130544811_428031294599911281_n.jpeg","706744758_18076556648271343_5432887629242380184_n.jpg","706803641_18076556675271343_8649358209257950322_n.jpg","706819296_18076556693271343_5047464824384448234_n.jpg","707506528_18076770305271343_3055521661828885773_n.jpeg","707531917_18076556666271343_2963011186391505437_n.jpg","707898958_18076556684271343_2605058153619717034_n.jpg","707946596_18076556657271343_6133707414085159058_n.jpg","709092641_18077058812271343_7636497277934135134_n.jpeg","709166453_18077058821271343_6511009396547736082_n.jpeg","711075572_18077058800271343_1523975201352915598_n.jpeg","712446804_18077058776271343_6358352467266005887_n.jpeg","720760623_18078912611271343_8574647466539102907_n.jpg","722204598_18078912629271343_3988150412654948400_n.jpg","722336411_18078912581271343_2268249602469997396_n.jpg","722768205_18078912593271343_4190230404461070480_n.jpg","726526344_18079511396271343_875610754074804443_n.jpg","727136498_18079509500271343_2561008323746480873_n.jpg","728213053_18079509476271343_8000956262447298955_n.jpg","728580733_18079509674271343_4273050561655194954_n.jpg","728618439_18079511267271343_1879798584411479111_n.jpg","728627385_18079509836271343_441481871507638755_n.jpg","728653448_18079511288271343_6937903071610511872_n.jpg"
+    ],
+    personnes:[
+        "626297528_18070264808544811_2449401065113287346_n.jpeg","631920755_18070569473544811_8718289216087484388_n.jpg","631970937_18070735292544811_4252764335541332921_n.jpeg","634231828_18070735334544811_1683583647372653923_n.jpeg","641218675_18071677835544811_8023235010551017661_n.jpeg","648787692_18073007084544811_7319237290568432006_n.jpeg","655609491_18075395573544811_3104698910527199202_n.jpg","656841891_18076536836544811_2325906365302149368_n.jpg","657155483_18075567278544811_4044226095025467678_n.jpg","657279504_18075619667544811_6066833509996596879_n.jpg","657402065_18075395555544811_6690170932659723324_n.jpg","657760912_18075395552544811_4579799169985436230_n.jpg","658957064_1305907674787488_3168727624114107591_n.jpg","659156192_18075395564544811_1625321683230501706_n.jpg","660935327_18075619685544811_8431635427641504908_n.jpg","683919353_18079087910544811_3723419160355306941_n.jpg","684900567_18079087901544811_7672244313951094460_n.jpg","684955639_18079088324544811_1367358119364521373_n.jpg","685922989_18079087919544811_8059472320400818328_n.jpg","703064724_18081323621544811_8539896026933350110_n.jpeg","703111521_18081432224544811_1175079228885816413_n.jpeg","712544406_18077371232271343_6976097480411310557_n.jpg","713744281_18077371241271343_9164751974159448086_n.jpg","714521961_18077371259271343_7365558888817671658_n.jpg","714774746_18077371250271343_966036296197095021_n.jpg","714912014_18077371268271343_4677527658957247535_n.jpg","717096688_36228916543420832_7175244127057132521_n.jpeg","718728929_1702066804325666_5989219994806179076_n.jpeg","724174922_18078912860271343_4378314224503581161_n.jpg","727125107_18079511159271343_8516411343980403389_n.jpg"
+    ]
+};
+const srcs=[];
+let gi=0;
+function buildGallery(){
+    const sc=window._siteContent;
+    const folders={..._galleryDefaults};
+    if(sc&&sc.gallery){
+        ['animaux','nature','personnes'].forEach(cat=>{
+            if(sc.gallery[cat]&&sc.gallery[cat].length)folders[cat]=sc.gallery[cat];
+        });
+    }
+    const grid=document.getElementById('galleryGrid');
+    grid.innerHTML='';
+    srcs.length=0;
+    gi=0;
+    ['animaux','nature','personnes'].forEach(cat=>{
+        folders[cat].forEach(f=>{
+            const path=cat+'/'+f;
+            const div=document.createElement('div');
+            div.className='g-item';
+            div.dataset.category=cat;
+            div.innerHTML='<img src="'+path+'" alt="'+cat+'" loading="lazy"><div class="g-overlay"><i class="fas fa-search-plus"></i></div>';
+            grid.appendChild(div);
+            srcs.push(path);
+            div.addEventListener('click',()=>{gi=srcs.indexOf(path);openLB(path);});
+        });
+    });
+    // Default to Nature
+    document.querySelectorAll('.g-item').forEach(item=>{
+        item.style.display=item.dataset.category==='nature'?'block':'none';
+    });
+}
+buildGallery();
+
+// LIGHTBOX
+const lb=document.getElementById('lightbox');
+const lbImg=document.getElementById('lbImg');
+document.getElementById('lbClose').addEventListener('click',closeLB);
+document.getElementById('lbPrev').addEventListener('click',()=>navLB(-1));
+document.getElementById('lbNext').addEventListener('click',()=>navLB(1));
+function openLB(s){lbImg.src=s;lb.classList.add('open');document.body.style.overflow='hidden'}
+function closeLB(){lb.classList.remove('open');document.body.style.overflow=''}
+function navLB(d){gi=(gi+d+srcs.length)%srcs.length;lbImg.src=srcs[gi]}
+lb.addEventListener('click',e=>{if(e.target===lb)closeLB()});
+document.addEventListener('keydown',e=>{
+    if(!lb.classList.contains('open'))return;
+    if(e.key==='Escape')closeLB();
+    if(e.key==='ArrowLeft')navLB(-1);
+    if(e.key==='ArrowRight')navLB(1);
+});
+
+// FILTER
+document.querySelectorAll('.f-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+        document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const f=btn.dataset.f;
+        document.querySelectorAll('.g-item').forEach(item=>{
+            item.style.display=(f==='all'||item.dataset.category===f)?'block':'none';
+        });
+    });
+});
+
+// TESTIMONIAL CAROUSEL
+const track=document.getElementById('tsTrack');
+const slides=document.querySelectorAll('.ts-slide');
+const dots=document.querySelectorAll('.ts-dot');
+let cur=0;
+let auto;
+function go(i){
+    if(i<0)i=slides.length-1;
+    if(i>=slides.length)i=0;
+    cur=i;
+    track.style.transform='translateX(-'+(i*100)+'%)';
+    dots.forEach((d,j)=>d.classList.toggle('active',j===i));
+}
+function resetAuto(){clearInterval(auto);auto=setInterval(()=>go(cur+1),5000)}
+document.getElementById('tsPrev').addEventListener('click',()=>{go(cur-1);resetAuto()});
+document.getElementById('tsNext').addEventListener('click',()=>{go(cur+1);resetAuto()});
+dots.forEach(d=>d.addEventListener('click',function(){go(parseInt(this.dataset.i));resetAuto()}));
+resetAuto();
+
+// BACK TO TOP
+const backBtn=document.getElementById('backTop');
+backBtn.addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+});
+
+// FORM
+const form=document.getElementById('contactForm');
+const nI=document.getElementById('fName');
+const eI=document.getElementById('fEmail');
+const mI=document.getElementById('fMsg');
+const nE=document.getElementById('nameErr');
+const eE=document.getElementById('emailErr');
+const mE=document.getElementById('msgErr');
+const toast=document.getElementById('toast');
+function showt(msg,type){
+    toast.textContent=msg;
+    toast.className='toast '+type+' show';
+    setTimeout(()=>toast.classList.remove('show'),4000);
+}
+function curLang(){return html.getAttribute('dir')==='rtl'?'ar':'fr'}
+function t(k){return langData[curLang()]&&langData[curLang()][k]?langData[curLang()][k]:''}
+function val(i,e,k){
+    const c= k==='name_err'?i.value.trim().length>0 : k==='email_err'?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()) : i.value.trim().length>=10;
+    e.textContent=t(k);
+    if(c){i.classList.remove('error');i.classList.add('success');e.classList.remove('show');return true}
+    else{i.classList.remove('success');i.classList.add('error');e.classList.add('show');return false}
+}
+form.addEventListener('submit',function(e){
+    e.preventDefault();
+    const n=val(nI,nE,'name_err');
+    const em=val(eI,eE,'email_err');
+    const m=val(mI,mE,'msg_err');
+    if(n&&em&&m){
+        showt(t('toast_success'),'success');
+        form.reset();
+        [nI,eI,mI].forEach(el=>el.classList.remove('success','error'));
+    } else showt(t('toast_error'),'error');
+});
+[nI,eI,mI].forEach(inp=>{
+    inp.addEventListener('input',function(){
+        if(this.classList.contains('error')||this.classList.contains('success')){
+            if(this===nI)val(nI,nE,'name_err');
+            if(this===eI)val(eI,eE,'email_err');
+            if(this===mI)val(mI,mE,'msg_err');
+        }
+    });
+});
+
+// STICKY CTA HIDE ON CONTACT
+const cta=document.getElementById('stickyCta');
+const contactSec=document.getElementById('contact');
+window.addEventListener('scroll',()=>{
+    if(!contactSec)return;
+    const rect=contactSec.getBoundingClientRect();
+    cta.classList.toggle('hidden',rect.top<window.innerHeight);
+});
+
+})();
+</script>
+</body>
+</html>
