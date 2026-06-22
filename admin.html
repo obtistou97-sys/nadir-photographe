@@ -107,6 +107,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div class="toast" id="toast"></div>
 
 <script>
+const STORAGE_BASE='https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public';
+function imgUrl(p){if(!p||p.startsWith('http'))return p;if(p.includes('/'))return STORAGE_BASE+'/'+p;return STORAGE_BASE+'/personnes/'+p}
 (function(){
 'use strict';
 
@@ -354,7 +356,7 @@ function renderPortfolio(){
     function catHtml(cat, label, icon, files){
         const imgs = (files||[]).map((f,i) =>
             '<div draggable="true" data-cat="'+cat+'" data-idx="'+i+'" ondragstart="dragStart(event)" ondragover="dragOver(event)" ondrop="dropImg(event)" style="position:relative;display:inline-block;cursor:grab;margin:2px">'+
-            '<img src="'+cat+'/'+f+'" style="width:80px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">'+
+            '<img src="'+imgUrl(cat+'/'+f)+'" style="width:80px;height:80px;object-fit:cover;border-radius:6px;border:1px solid var(--border)">'+
             '<button onclick="event.stopPropagation();removeGalImg(\''+cat+'\','+i+')" style="position:absolute;top:-6px;right:-6px;width:20px;height:20px;border-radius:50%;background:var(--danger);color:#fff;border:none;font-size:12px;cursor:pointer;line-height:1;padding:0">✕</button>'+
             '</div>'
         ).join('');
