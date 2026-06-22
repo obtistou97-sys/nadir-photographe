@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 const CATEGORIES = ['animaux', 'nature', 'personnes'];
 
 const SUPABASE_URL = process.env.SUPABASE_URL || 'https://lhrwtjjdyabuijssrmve.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxocnd0ampkeWFidWlqc3NybXZlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjE0NTgxOCwiZXhwIjoyMDk3NTA1ODE4fQ.h-_TRFtDLjdb72bgSTxJ6TCusMOlF9Ohr6lTp8O5uEE';
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_KEY || process.env.SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxocnd0ampkeWFidWlqc3NybXZlIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjEyOTk2MSwiZXhwIjoyMDk3NzA1OTYxfQ.PFrQ9GIiOd8qKJs4CEwRm0kPY47n2Wfv3xU1YjAPDWA';
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const DEFAULTS = {
