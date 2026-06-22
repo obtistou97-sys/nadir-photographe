@@ -37,7 +37,6 @@ async function saveContent(content) {
 
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
-app.use(express.static(path.join(__dirname)));
 
 // ---------- PUBLIC ----------
 app.get('/api/ping', (req, res) => res.json({ ok: true }));
@@ -129,23 +128,14 @@ app.get('/:category/:filename', async (req, res) => {
 });
 
 // ---------- ROOT FILES (hero, logo, about image) ----------
-const ROOT_FILES = ['hero', 'logo.png', 'Qui suis-je.jpg'];
-app.get('/:filename', (req, res, next) => {
+// All assets are served from Supabase Storage
+app.get('/:filename', (req, res) => {
   const { filename } = req.params;
-  if (ROOT_FILES.includes(filename)) {
-    const fp = path.join(__dirname, filename);
-    if (require('fs').existsSync(fp)) return res.sendFile(fp);
-    // fallback: try Supabase Storage
-    return (async () => {
-      for (const cat of CATEGORIES) {
-        const { data } = supabase.storage.from(cat).getPublicUrl(filename);
-        if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
-      }
-      res.status(404).end();
-    })();
+  for (const cat of CATEGORIES) {
+    const { data } = supabase.storage.from(cat).getPublicUrl(filename);
+    if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
   }
-  next();
-  return;
+  res.status(404).end();
 });
 
 app.listen(PORT, () => {
