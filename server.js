@@ -142,6 +142,21 @@ app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/index.html', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
 app.get('/admin.html', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
 
+// ---------- ROOT FILE UPLOAD ----------
+app.post('/api/upload-root', adminAuth, upload.array('files', 1), async (req, res) => {
+  const file = req.files?.[0];
+  if (!file) return res.status(400).json({ ok: false, error: 'Aucun fichier' });
+  const ext = path.extname(file.originalname).toLowerCase();
+  if (!['.jpg','.jpeg','.png','.gif','.webp','.avif'].includes(ext))
+    return res.status(400).json({ ok: false, error: 'Format non supporté' });
+  const name = req.body.name || file.originalname;
+  const { error } = await supabase.storage.from('personnes').upload(name, file.buffer, {
+    contentType: file.mimetype, upsert: true
+  });
+  if (error) return res.status(500).json({ ok: false, error: error.message });
+  res.json({ ok: true, filename: name });
+});
+
 // ---------- IMAGE REDIRECTS ----------
 app.get('/:category/:filename', async (req, res) => {
   const { category, filename } = req.params;
@@ -152,19 +167,22 @@ app.get('/:category/:filename', async (req, res) => {
 });
 
 // ---------- ROOT FILES (hero, logo, about image) ----------
-app.get('/:filename', (req, res, next) => {
+app.get('/:filename', async (req, res, next) => {
   const { filename } = req.params;
-  // Try local file first
+  // Try Supabase Storage first (uploaded images take priority over deploy-time artifacts)
+  const { data } = supabase.storage.from('personnes').getPublicUrl(filename);
+  if (data && data.publicUrl) {
+    try {
+      const head = await fetch(data.publicUrl, { method: 'HEAD' });
+      if (head.ok) return res.redirect(302, data.publicUrl);
+    } catch (_) {}
+  }
+  // Fallback: try local file (deploy-time artifact)
   const fp = path.join(__dirname, filename);
   if (fs.existsSync(fp)) {
     const ext = path.extname(filename).toLowerCase();
-    const mime = ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : ext === '.svg' ? 'image/svg+xml' : ext === '.webp' ? 'image/webp' : 'application/octet-stream';
+    const mime = ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : ext === '.svg' ? 'image/svg+xml' : ext === '.webp' ? 'image/webp' : 'image/jpeg';
     return res.sendFile(fp, { headers: { 'Content-Type': mime } });
-  }
-  // Fallback: try Supabase Storage
-  for (const cat of CATEGORIES) {
-    const { data } = supabase.storage.from(cat).getPublicUrl(filename);
-    if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
   }
   res.status(404).end();
 });

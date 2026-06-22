@@ -243,6 +243,15 @@ function renderHero(){
         ${input('heroTitle','Titre (HTML accepté)',d.titleHtml)}
         ${input('heroDesc','Description',d.desc,{textarea:true,rows:3})}
         ${input('heroBg','Image de fond (chemin)',d.bg)}
+        <div style="margin-top:10px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Image actuelle</p>
+            <img src="${imgUrl(d.bg)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-bottom:10px" onerror="this.style.display='none'">
+            <label class="btn-out btn-sm" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;width:auto;padding:6px 12px;font-size:.8rem;border:1px solid var(--gold);border-radius:6px;color:var(--gold)">
+                <i class="fas fa-upload"></i> Changer l'image
+                <input type="file" accept="image/*" style="display:none" onchange="uploadRootImage(event,'hero')">
+            </label>
+            <span style="font-size:.7rem;color:var(--text2);margin-left:8px">L'image est sauvegardée immédiatement</span>
+        </div>
         <div class="form-actions">
             <button class="btn-gold btn-sm" onclick="SAVE.hero()">Sauvegarder</button>
         </div>`;
@@ -265,6 +274,15 @@ function renderAbout(){
         ${input('aboutDesc1','Description 1',d.desc1,{textarea:true,rows:3})}
         ${input('aboutDesc2','Description 2',d.desc2,{textarea:true,rows:3})}
         ${input('aboutImg','Image (chemin)',d.img)}
+        <div style="margin-top:10px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
+            <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Image actuelle</p>
+            <img src="${imgUrl(d.img)}" style="width:100%;max-height:200px;object-fit:cover;border-radius:6px;margin-bottom:10px" onerror="this.style.display='none'">
+            <label class="btn-out btn-sm" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;width:auto;padding:6px 12px;font-size:.8rem;border:1px solid var(--gold);border-radius:6px;color:var(--gold)">
+                <i class="fas fa-upload"></i> Changer l'image
+                <input type="file" accept="image/*" style="display:none" onchange="uploadRootImage(event,'Qui suis-je.jpg')">
+            </label>
+            <span style="font-size:.7rem;color:var(--text2);margin-left:8px">L'image est sauvegardée immédiatement</span>
+        </div>
         ${input('aboutBtn','Texte du bouton',d.btn)}
         <div style="margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">
             <p style="font-size:.82rem;color:var(--text2);margin-bottom:8px;font-weight:500">Statistiques</p>
@@ -348,6 +366,29 @@ window.addGalImgs = async function(ev, cat){
     } catch(e) {
         showToast('Erreur upload: serveur inaccessible', 'error');
     }
+    ev.target.value = '';
+};
+
+// --- ROOT IMAGE UPLOAD (hero, about) ---
+window.uploadRootImage = async function(ev, name){
+    const file = ev.target.files?.[0];
+    if(!file) return;
+    const formData = new FormData();
+    formData.append('files', file);
+    formData.append('name', name);
+    try {
+        const res = await fetch('/api/upload-root', {
+            method: 'POST',
+            headers: { 'X-Admin-Password': adminPassword },
+            body: formData
+        });
+        const resData = await res.json();
+        if(resData.ok){
+            showToast('Image mise à jour ✓', 'success');
+            if(name === 'hero'){ data.hero.bg = 'hero'; saveContentToServer(); renderHero(); }
+            else if(name === 'Qui suis-je.jpg'){ data.about.img = 'Qui suis-je.jpg'; saveContentToServer(); renderAbout(); }
+        } else showToast(resData.error || 'Erreur', 'error');
+    } catch(e){ showToast('Erreur upload: serveur inaccessible', 'error'); }
     ev.target.value = '';
 };
 
