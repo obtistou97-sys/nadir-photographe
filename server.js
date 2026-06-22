@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const { createClient } = require('@supabase/supabase-js');
 const cors = require('cors');
+const fs = require('fs');
 const path = require('path');
 
 const app = express();
@@ -146,9 +147,12 @@ app.get('/:category/:filename', async (req, res) => {
 });
 
 // ---------- ROOT FILES (hero, logo, about image) ----------
-// All assets are served from Supabase Storage
-app.get('/:filename', (req, res) => {
+app.get('/:filename', (req, res, next) => {
   const { filename } = req.params;
+  // Try local file first
+  const fp = path.join(__dirname, filename);
+  if (fs.existsSync(fp)) return res.sendFile(fp);
+  // Fallback: try Supabase Storage
   for (const cat of CATEGORIES) {
     const { data } = supabase.storage.from(cat).getPublicUrl(filename);
     if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
