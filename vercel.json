@@ -1,4 +1,14 @@
 {
   "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "server.js" }]
+  "routes": [
+    {
+      "src": "/(animaux|nature|personnes)/(.*)",
+      "dest": "https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public/$1/$2"
+    },
+    {
+      "src": "/(logo.png|hero|Qui suis-je.jpg)",
+      "dest": "https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public/personnes/$1"
+    },
+    { "src": "/(.*)", "dest": "server.js" }
+  ]
 }
