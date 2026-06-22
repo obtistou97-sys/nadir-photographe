@@ -834,6 +834,7 @@ backBtn.addEventListener('click',()=>{
 const form=document.getElementById('contactForm');
 const nI=document.getElementById('fName');
 const eI=document.getElementById('fEmail');
+const fP=document.getElementById('fPhone');
 const mI=document.getElementById('fMsg');
 const nE=document.getElementById('nameErr');
 const eE=document.getElementById('emailErr');
@@ -852,15 +853,24 @@ function val(i,e,k){
     if(c){i.classList.remove('error');i.classList.add('success');e.classList.remove('show');return true}
     else{i.classList.remove('success');i.classList.add('error');e.classList.add('show');return false}
 }
-form.addEventListener('submit',function(e){
+form.addEventListener('submit',async function(e){
     e.preventDefault();
     const n=val(nI,nE,'name_err');
     const em=val(eI,eE,'email_err');
     const m=val(mI,mE,'msg_err');
     if(n&&em&&m){
-        showt(t('toast_success'),'success');
-        form.reset();
-        [nI,eI,mI].forEach(el=>el.classList.remove('success','error'));
+        try {
+            const r=await fetch('/api/contact',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({name:nI.value.trim(),email:eI.value.trim(),phone:fP.value.trim(),message:mI.value.trim()})
+            });
+            if(r.ok){
+                showt(t('toast_success'),'success');
+                form.reset();
+                [nI,eI,mI].forEach(el=>el.classList.remove('success','error'));
+            } else showt(t('toast_error'),'error');
+        } catch(e){showt(t('toast_error'),'error')}
     } else showt(t('toast_error'),'error');
 });
 [nI,eI,mI].forEach(inp=>{

@@ -61,6 +61,18 @@ app.post('/api/auth', async (req, res) => {
   else res.status(401).json({ ok: false, error: 'Mot de passe incorrect' });
 });
 
+// ---------- CONTACT FORM ----------
+app.post('/api/contact', async (req, res) => {
+  const { name, email, phone, message } = req.body;
+  if (!name || !email || !message) return res.status(400).json({ ok: false, error: 'Champs requis' });
+  const { error } = await supabase.from('contact_messages').insert({
+    name, email, phone: phone || '', message,
+    created_at: new Date().toISOString()
+  });
+  if (error) return res.status(500).json({ ok: false, error: error.message });
+  res.json({ ok: true });
+});
+
 // ---------- AUTH MIDDLEWARE ----------
 async function adminAuth(req, res, next) {
   const c = await getContent();
