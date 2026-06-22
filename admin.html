@@ -97,6 +97,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
             <button data-section="services"><i class="fas fa-camera"></i> Services</button>
             <button data-section="testimonials"><i class="fas fa-star"></i> Testimonials</button>
             <button data-section="contact"><i class="fas fa-envelope"></i> Contact</button>
+            <button data-section="messages"><i class="fab fa-whatsapp"></i> Messages</button>
             <button data-section="coord"><i class="fas fa-map-marker-alt"></i> Coordonnées</button>
             <button data-section="password"><i class="fas fa-key"></i> Password</button>
         </div>
@@ -207,6 +208,7 @@ function renderSection(section){
         services: renderServices,
         testimonials: renderTestimonials,
         contact: renderContact,
+        messages: renderMessages,
         coord: renderCoord,
         password: renderPassword,
     };
@@ -523,6 +525,43 @@ window.SAVE.contact = function(){
     };
     saveContentToServer();
 };
+
+// --- MESSAGES ---
+const WA_NUMBER = '213555123456';
+async function renderMessages(){
+    document.getElementById('dashMain').innerHTML = '<h3>💬 Messages reçus</h3><div class="info-box">Chargement...</div>';
+    try {
+        const r = await fetch('/api/messages', { headers: { 'X-Admin-Password': adminPassword } });
+        if(!r.ok) throw Error();
+        const msgs = await r.json();
+        if(!msgs.length){
+            document.getElementById('dashMain').innerHTML = '<h3>💬 Messages reçus</h3><div class="info-box">Aucun message pour le moment.</div>';
+            return;
+        }
+        const rows = msgs.map(m => {
+            const wa = m.phone ? 'https://wa.me/' + m.phone.replace(/[^0-9]/g,'') + '?text=' + encodeURIComponent('Bonjour ' + m.name + ', merci pour votre message concernant : ' + m.message.substring(0,80)) : null;
+            const date = new Date(m.created_at).toLocaleString('fr-FR');
+            return '<tr style="border-bottom:1px solid var(--border)">'+
+                '<td style="padding:8px;font-size:.8rem">'+date+'</td>'+
+                '<td style="padding:8px"><strong>'+m.name+'</strong><br><span style="font-size:.75rem;color:var(--text2)">'+m.email+'</span></td>'+
+                '<td style="padding:8px;font-size:.8rem;max-width:300px;word-break:break-word">'+m.message.substring(0,200)+(m.message.length>200?'...':'')+'</td>'+
+                '<td style="padding:8px;text-align:center">'+(wa?'<a href="'+wa+'" target="_blank" style="color:#25D366;font-size:1.2rem" title="Répondre via WhatsApp"><i class="fab fa-whatsapp"></i></a>':'<span style="color:var(--text2);font-size:.7rem">—</span>')+'</td>'+
+            '</tr>';
+        }).join('');
+        document.getElementById('dashMain').innerHTML =
+            '<h3>💬 Messages reçus <span style="font-size:.8rem;font-weight:400;color:var(--text2)">('+msgs.length+')</span></h3>'+
+            '<table style="width:100%;border-collapse:collapse;font-size:.85rem">'+
+            '<thead><tr style="background:var(--bg2);text-align:left">'+
+            '<th style="padding:8px;font-weight:600">Date</th>'+
+            '<th style="padding:8px;font-weight:600">Client</th>'+
+            '<th style="padding:8px;font-weight:600">Message</th>'+
+            '<th style="padding:8px;font-weight:600;text-align:center">WhatsApp</th>'+
+            '</tr></thead><tbody>'+rows+'</tbody></table>'+
+            '<div class="form-actions"><button class="btn-out btn-sm" onclick="renderMessages()"><i class="fas fa-sync"></i> Actualiser</button></div>';
+    } catch(e) {
+        document.getElementById('dashMain').innerHTML = '<h3>💬 Messages reçus</h3><div class="info-box" style="color:var(--danger)">Erreur de chargement.</div>';
+    }
+}
 
 // --- COORD ---
 function renderCoord(){

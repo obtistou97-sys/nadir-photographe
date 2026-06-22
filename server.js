@@ -73,6 +73,12 @@ app.post('/api/contact', async (req, res) => {
   res.json({ ok: true });
 });
 
+app.get('/api/messages', adminAuth, async (req, res) => {
+  const { data, error } = await supabase.from('contact_messages').select('*').order('created_at', { ascending: false });
+  if (error) return res.status(500).json({ ok: false, error: error.message });
+  res.json(data || []);
+});
+
 // ---------- AUTH MIDDLEWARE ----------
 async function adminAuth(req, res, next) {
   const c = await getContent();
