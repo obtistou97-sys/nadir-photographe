@@ -65,7 +65,7 @@ app.post('/api/auth', async (req, res) => {
 // ---------- CONTACT FORM ----------
 app.post('/api/contact', async (req, res) => {
   const { name, email, phone, message } = req.body;
-  if (!name || !email || !message) return res.status(400).json({ ok: false, error: 'Champs requis' });
+  if (!name || !email || !phone || !message) return res.status(400).json({ ok: false, error: 'Champs requis' });
   const { error } = await supabase.from('contact_messages').insert({
     name, email, phone: phone || '', message,
     created_at: new Date().toISOString()

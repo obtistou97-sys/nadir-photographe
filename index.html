@@ -402,7 +402,8 @@ section{padding:48px 18px}
                     <div class="f-error" id="emailErr" data-lang="email_err">Email invalide.</div>
                 </div>
                 <div style="margin-bottom:10px">
-                    <input type="tel" class="f-input" id="fPhone" placeholder="Votre téléphone" data-lang-ph="phone_ph">
+                    <input type="tel" class="f-input" id="fPhone" placeholder="Votre téléphone *" required data-lang-ph="phone_ph">
+                    <div class="f-error" id="phoneErr" data-lang="phone_err">Téléphone invalide.</div>
                 </div>
                 <div style="margin-bottom:14px">
                     <textarea class="f-input" id="fMsg" rows="3" placeholder="Votre message *" required data-lang-ph="msg_ph"></textarea>
@@ -509,7 +510,7 @@ const langData={
         footer_copy:'&copy; 2026 <span class="gold">Nadir Photographe</span>. Tous droits réservés.',
         designed:"Designed by",sticky_cta:"Réserver un Shooting",
         menu_about:"About us",menu_services:"Services",menu_work:"Our Work",menu_testimonial:"Testimonial",menu_contact:"Contact us",
-        name_err:"Requis.",email_err:"Email invalide.",msg_err:"Min 10 car.",
+        name_err:"Requis.",email_err:"Email invalide.",phone_err:"Téléphone invalide.",msg_err:"Min 10 car.",
         toast_success:"Message envoyé !",toast_error:"Corrigez les champs en rouge.",
     },
     ar:{
@@ -548,7 +549,7 @@ const langData={
         footer_copy:'&copy; 2026 <span class="gold">نادر للتصوير</span>. جميع الحقوق محفوظة.',
         designed:"تصميم",sticky_cta:"احجز جلسة تصوير",
         menu_about:"عنّي",menu_services:"خدماتي",menu_work:"أعمالي",menu_testimonial:"شهادات",menu_contact:"اتصل بي",
-        name_err:"مطلوب",email_err:"بريد غير صالح",msg_err:"10 أحرف على الأقل",
+        name_err:"مطلوب",email_err:"بريد غير صالح",phone_err:"رقم هاتف غير صالح",msg_err:"10 أحرف على الأقل",
         toast_success:"!تم إرسال الرسالة",toast_error:".صحّح الحقول الحمراء",
     }
 };
@@ -838,6 +839,7 @@ const fP=document.getElementById('fPhone');
 const mI=document.getElementById('fMsg');
 const nE=document.getElementById('nameErr');
 const eE=document.getElementById('emailErr');
+const pE=document.getElementById('phoneErr');
 const mE=document.getElementById('msgErr');
 const toast=document.getElementById('toast');
 function showt(msg,type){
@@ -848,7 +850,7 @@ function showt(msg,type){
 function curLang(){return html.getAttribute('dir')==='rtl'?'ar':'fr'}
 function t(k){return langData[curLang()]&&langData[curLang()][k]?langData[curLang()][k]:''}
 function val(i,e,k){
-    const c= k==='name_err'?i.value.trim().length>0 : k==='email_err'?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()) : i.value.trim().length>=10;
+    const c= k==='name_err'?i.value.trim().length>0 : k==='email_err'?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(i.value.trim()) : k==='phone_err'?/^[+]?[\d\s()-]{7,20}$/.test(i.value.trim()) : i.value.trim().length>=10;
     e.textContent=t(k);
     if(c){i.classList.remove('error');i.classList.add('success');e.classList.remove('show');return true}
     else{i.classList.remove('success');i.classList.add('error');e.classList.add('show');return false}
@@ -857,8 +859,9 @@ form.addEventListener('submit',async function(e){
     e.preventDefault();
     const n=val(nI,nE,'name_err');
     const em=val(eI,eE,'email_err');
+    const p=val(fP,pE,'phone_err');
     const m=val(mI,mE,'msg_err');
-    if(n&&em&&m){
+    if(n&&em&&p&&m){
         try {
             const r=await fetch('/api/contact',{
                 method:'POST',
@@ -868,16 +871,17 @@ form.addEventListener('submit',async function(e){
             if(r.ok){
                 showt(t('toast_success'),'success');
                 form.reset();
-                [nI,eI,mI].forEach(el=>el.classList.remove('success','error'));
+                [nI,eI,fP,mI].forEach(el=>el.classList.remove('success','error'));
             } else showt(t('toast_error'),'error');
         } catch(e){showt(t('toast_error'),'error')}
     } else showt(t('toast_error'),'error');
 });
-[nI,eI,mI].forEach(inp=>{
+[nI,eI,fP,mI].forEach(inp=>{
     inp.addEventListener('input',function(){
         if(this.classList.contains('error')||this.classList.contains('success')){
             if(this===nI)val(nI,nE,'name_err');
             if(this===eI)val(eI,eE,'email_err');
+            if(this===fP)val(fP,pE,'phone_err');
             if(this===mI)val(mI,mE,'msg_err');
         }
     });
