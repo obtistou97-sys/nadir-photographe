@@ -112,13 +112,14 @@ app.delete('/api/upload/:category/:filename', adminAuth, async (req, res) => {
   res.json({ ok: true });
 });
 
-// ---------- STATIC FALLBACK (for images from Supabase) ----------
-// Images are served directly from Supabase Storage URLs.
-// admin.html and index.html reference them as "category/filename".
-// The browser resolves these as relative URLs to the Vercel domain.
-// We rewrite them to Supabase Storage URLs.
-app.get('/', (req, res) => res.redirect('/index.html'));
+// ---------- STATIC HTML PAGES ----------
+const HTML_FILES = ['index.html', 'admin.html'];
 
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/index.html', (req, res) => res.sendFile(path.join(__dirname, 'index.html')));
+app.get('/admin.html', (req, res) => res.sendFile(path.join(__dirname, 'admin.html')));
+
+// ---------- IMAGE REDIRECTS ----------
 app.get('/:category/:filename', async (req, res) => {
   const { category, filename } = req.params;
   if (!CATEGORIES.includes(category)) return res.status(404).end();
@@ -127,15 +128,24 @@ app.get('/:category/:filename', async (req, res) => {
   res.status(404).end();
 });
 
-app.get('/:filename', async (req, res) => {
+// ---------- ROOT FILES (hero, logo, about image) ----------
+const ROOT_FILES = ['hero', 'logo.png', 'Qui suis-je.jpg'];
+app.get('/:filename', (req, res, next) => {
   const { filename } = req.params;
-  // Try each category bucket for root-level files
-  for (const cat of CATEGORIES) {
-    const { data } = supabase.storage.from(cat).getPublicUrl(filename);
-    if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
+  if (ROOT_FILES.includes(filename)) {
+    const fp = path.join(__dirname, filename);
+    if (require('fs').existsSync(fp)) return res.sendFile(fp);
+    // fallback: try Supabase Storage
+    return (async () => {
+      for (const cat of CATEGORIES) {
+        const { data } = supabase.storage.from(cat).getPublicUrl(filename);
+        if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
+      }
+      res.status(404).end();
+    })();
   }
-  // If static file exists locally (index.html, admin.html, etc.), express.static handles it
-  res.status(404).end();
+  next();
+  return;
 });
 
 app.listen(PORT, () => {
