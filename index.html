@@ -221,7 +221,7 @@ section{padding:48px 18px}
             <a href="https://wa.me/213791409125" target="_blank" rel="noopener" aria-label="WhatsApp" style="color:var(--text2);font-size:1.1rem;text-decoration:none"><i class="fab fa-whatsapp"></i></a>
         </div>
     </div>
-    <a href="/" onclick="event.preventDefault();history.scrollRestoration='manual';location.reload()" style="display:flex;align-items:center"><img src="https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public/personnes/logo.png" alt="Nadir" style="cursor:pointer"></a>
+    <a href="/" onclick="event.preventDefault();history.scrollRestoration='manual';location.reload()" style="display:flex;align-items:center"><img src="/logo.png" alt="Nadir" style="cursor:pointer"></a>
     <div class="top-right">
         <nav class="desktop-nav" id="desktopNav">
             <a href="#about" data-lang="menu_about">About us</a>
@@ -256,7 +256,7 @@ section{padding:48px 18px}
 
 <!-- HERO -->
 <section class="hero" id="hero">
-    <div class="hero-bg" style="background-image:url('https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public/personnes/hero')"></div>
+    <div class="hero-bg" style="background-image:url('/hero')"></div>
     <div class="hero-content">
         <p class="gold" style="font-size:.7rem;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px" data-lang="hero_tag">Photographe Professionnel</p>
         <h1 style="font-size:clamp(2.2rem,10vw,3.5rem);color:#fff;line-height:1.1;margin-bottom:10px" data-lang-html="hero_title">Nadir<br><span class="gold">Photographe</span></h1>
@@ -276,7 +276,7 @@ section{padding:48px 18px}
         <div class="section-line"></div>
     </div>
     <div class="reveal r1">
-        <img src="https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public/personnes/Qui suis-je.jpg" alt="Nadir" style="width:100%;border-radius:12px;margin-bottom:18px;max-height:320px;object-fit:cover">
+        <img src="/Qui%20suis-je.jpg" alt="Nadir" style="width:100%;border-radius:12px;margin-bottom:18px;max-height:320px;object-fit:cover">
     </div>
     <div class="reveal r2">
         <h3 style="font-size:1.2rem;margin-bottom:10px" data-lang-html="about_subtitle">Capturer l'émotion, <span class="gold">créer des souvenirs</span></h3>
@@ -554,7 +554,7 @@ const langData={
     }
 };
 const STORAGE_BASE='https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public';
-function imgUrl(p){if(!p||p.startsWith('http'))return p;if(p.includes('/'))return STORAGE_BASE+'/'+p;return STORAGE_BASE+'/personnes/'+p}
+function imgUrl(p){if(!p||p.startsWith('http'))return p;if(p.includes('/'))return STORAGE_BASE+'/'+p;return '/'+encodeURIComponent(p)}
 
 const langBtn=document.getElementById('langBtn');
 const langLabel=document.getElementById('langLabel');

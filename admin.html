@@ -109,7 +109,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <script>
 const STORAGE_BASE='https://lhrwtjjdyabuijssrmve.supabase.co/storage/v1/object/public';
-function imgUrl(p){if(!p||p.startsWith('http'))return p;if(p.includes('/'))return STORAGE_BASE+'/'+p;return STORAGE_BASE+'/personnes/'+p}
+function imgUrl(p){if(!p||p.startsWith('http'))return p;if(p.includes('/'))return STORAGE_BASE+'/'+p;return '/'+encodeURIComponent(p)}
 (function(){
 'use strict';
 
