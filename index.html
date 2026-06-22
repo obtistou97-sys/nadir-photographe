@@ -872,7 +872,10 @@ form.addEventListener('submit',async function(e){
                 showt(t('toast_success'),'success');
                 form.reset();
                 [nI,eI,fP,mI].forEach(el=>el.classList.remove('success','error'));
-            } else showt(t('toast_error'),'error');
+            } else {
+                const d = await r.json().catch(()=>({}));
+                showt(d.error||t('toast_error'),'error');
+            }
         } catch(e){showt(t('toast_error'),'error')}
     } else showt(t('toast_error'),'error');
 });
