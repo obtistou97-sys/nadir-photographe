@@ -146,12 +146,22 @@ app.get('/:category/:filename', async (req, res) => {
   res.status(404).end();
 });
 
+// ---------- DEBUG ----------
+app.get('/api/debug', (req, res) => {
+  const files = fs.readdirSync(__dirname).filter(f => f === 'logo.png' || f === 'hero' || f === 'Qui suis-je.jpg' || f.endsWith('.html'));
+  res.json({ __dirname, cwd: process.cwd(), files, exists_logo: fs.existsSync(path.join(__dirname, 'logo.png')), exists_hero: fs.existsSync(path.join(__dirname, 'hero')) });
+});
+
 // ---------- ROOT FILES (hero, logo, about image) ----------
 app.get('/:filename', (req, res, next) => {
   const { filename } = req.params;
   // Try local file first
   const fp = path.join(__dirname, filename);
-  if (fs.existsSync(fp)) return res.sendFile(fp);
+  if (fs.existsSync(fp)) {
+    const ext = path.extname(filename).toLowerCase();
+    const mime = ext === '.png' ? 'image/png' : ext === '.jpg' || ext === '.jpeg' ? 'image/jpeg' : ext === '.svg' ? 'image/svg+xml' : ext === '.webp' ? 'image/webp' : 'application/octet-stream';
+    return res.sendFile(fp, { headers: { 'Content-Type': mime } });
+  }
   // Fallback: try Supabase Storage
   for (const cat of CATEGORIES) {
     const { data } = supabase.storage.from(cat).getPublicUrl(filename);
