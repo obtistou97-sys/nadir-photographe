@@ -80,6 +80,11 @@ app.get('/api/messages', adminAuth, async (req, res) => {
   res.json(data || []);
 });
 
+app.get('/api/debug', (req, res) => {
+  const files = fs.readdirSync(__dirname).filter(f => f === 'logo.png' || f === 'hero' || f === 'Qui suis-je.jpg' || f.endsWith('.html'));
+  res.json({ __dirname, cwd: process.cwd(), files, exists_logo: fs.existsSync(path.join(__dirname, 'logo.png')), exists_hero: fs.existsSync(path.join(__dirname, 'hero')) });
+});
+
 // ---------- AUTH MIDDLEWARE ----------
 async function adminAuth(req, res, next) {
   const c = await getContent();
@@ -144,12 +149,6 @@ app.get('/:category/:filename', async (req, res) => {
   const { data } = supabase.storage.from(category).getPublicUrl(filename);
   if (data && data.publicUrl) return res.redirect(302, data.publicUrl);
   res.status(404).end();
-});
-
-// ---------- DEBUG ----------
-app.get('/api/debug', (req, res) => {
-  const files = fs.readdirSync(__dirname).filter(f => f === 'logo.png' || f === 'hero' || f === 'Qui suis-je.jpg' || f.endsWith('.html'));
-  res.json({ __dirname, cwd: process.cwd(), files, exists_logo: fs.existsSync(path.join(__dirname, 'logo.png')), exists_hero: fs.existsSync(path.join(__dirname, 'hero')) });
 });
 
 // ---------- ROOT FILES (hero, logo, about image) ----------
